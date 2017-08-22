@@ -25,7 +25,7 @@ A swiper written in Vue
 </sky-swiper>
 ```
 
-- `imageURL` is an image URL. Read requirements for url at [sky-crop](https://github.com/skybrud/sky-crop/)
+- `src` should be an image URL. Read requirements for url at [sky-crop](https://github.com/skybrud/sky-crop/)
 
 ## Credits
  
