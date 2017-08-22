@@ -1,0 +1,14 @@
+<div class="sky-swiper">
+	<div class="sky-swiper-frame">
+		<ul class="sky-swiper-slides">
+			<slot />
+		</ul>
+	</div>
+	<button class="sky-swiper-prev">Forrige</button>
+	<button class="sky-swiper-next">Næste</button>
+	<ul class="sky-swiper-bullets">
+		<li v-for="(bullet, index) in slides">
+			<button v-on:click="changeSlide(index)" v-bind:class="{active:index === currentSlide}">Slide #{{ index }}</button>
+		</li>
+	</ul>
+</div>
