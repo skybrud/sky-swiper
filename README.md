@@ -5,8 +5,8 @@ A swiper written in Vue
 ## Dependencies
 
 - [Vue](https://vuejs.org/)
-- [sky-crop](https://github.com/skybrud/sky-crop/)
 - [loryJS](https://github.com/meandmax/lory/)
+- [sky-crop](https://github.com/skybrud/sky-crop/)
 - [sky-svg](https://github.com/skybrud/sky-svg/)
 
 ## Usage
