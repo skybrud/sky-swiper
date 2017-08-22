@@ -25,6 +25,8 @@ A swiper written in Vue
 </sky-swiper>
 ```
 
+The contents of `<sky-swiper-item>` could be just about anything. Here we're adding an image with `<sky-crop>`.
+
 - `src` should be an image URL. Read requirements for url at [sky-crop](https://github.com/skybrud/sky-crop/)
 
 ## Credits
