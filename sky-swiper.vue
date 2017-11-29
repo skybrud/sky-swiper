@@ -1,12 +1,7 @@
 <script>
 import Vue from 'vue';
 import { lory } from 'lory.js';
-import SkySvg from 'sky-svg';
 import SkySwiperItem from './sky-swiper-item';
-
-// Register sub-component globally
-Vue.component('sky-swiper-item', SkySwiperItem);
-Vue.component('sky-svg', SkySvg);
 
 const defaults = {
 	slideSpeed: 500,

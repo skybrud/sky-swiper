@@ -8,7 +8,12 @@
 	<button class="sky-swiper-next">Næste</button>
 	<ul class="sky-swiper-bullets">
 		<li v-for="(bullet, index) in slides">
-			<button v-on:click="changeSlide(index)" v-bind:class="{active:index === currentSlide}">Slide #{{ index }}</button>
+			<button
+				@click="changeSlide(index)"
+				:class="{active:index === currentSlide}"
+			>
+				Slide #{{ index }}
+			</button>
 		</li>
 	</ul>
 </div>
