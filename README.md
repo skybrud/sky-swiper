@@ -7,7 +7,6 @@ A swiper written in Vue
 - [Vue](https://vuejs.org/)
 - [loryJS](https://github.com/meandmax/lory/)
 - [sky-crop](https://github.com/skybrud/sky-crop/)
-- [sky-svg](https://github.com/skybrud/sky-svg/)
 
 ## Usage
 
