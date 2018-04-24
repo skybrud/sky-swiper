@@ -20,7 +20,7 @@ import SkySwiper from 'sky-swiper';
 Vue.use(SkySwiper);
 
 ```
-The `<SkySwiper />` component is now available globally. In essence, the swiper uses the `items` prop in conjunction with the slots to allow you to render any kind of data inside the swiper that your use case calls for.
+The `<SkySwiper />` component registers globally. It uses the `items` prop in conjunction with slots to allow you to render any kind of data inside the swiper.
 
 ### Basic markup
 Just content:
@@ -32,7 +32,7 @@ Just content:
 	]"
 >
 	<div slot="content" slot-scope="{ item }">
-		<!-- Provide a template for rendering the items here, ie: -->
+		<!-- Template for rendering an item here, ie: -->
 		<img :src="item.imageSrc" />
 	</div>
 </SkySwiper>
@@ -47,12 +47,12 @@ Content and caption:
 	]"
 >
 	<div slot="content" slot-scope="{ item }">
-		<!-- Provide a template for rendering the items here, ie: -->
+		<!-- Template for rendering an item here, ie: -->
 		<img :src="item.imageSrc" />
 	</div>
 
 	<div slot="caption" slot-scope="{ item }">
-		<!-- Provide a template for rendering the caption here, ie: -->
+		<!-- Template for captions, ie: -->
 		<p v-text="item.description" />
 	</div>
 </SkySwiper>
