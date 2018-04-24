@@ -1,32 +1,130 @@
 # sky-swiper
+> A versatile slot-based Vue swiper component
 
-A swiper written in Vue
+## Installation
+```bash
+npm install sky-swiper
+```
+or
+```bash
+yarn add sky-swiper
+```
 
-## Dependencies
-
-- [Vue](https://vuejs.org/)
-- [loryJS](https://github.com/meandmax/lory/)
-- [sky-crop](https://github.com/skybrud/sky-crop/)
 
 ## Usage
+Begin by importing and installing the SkySwiper Vue plugin
+```js
+import Vue from 'vue';
+import SkySwiper from 'sky-swiper';
+
+Vue.use(SkySwiper);
 
 ```
-<sky-swiper>
-	<sky-swiper-item>
-		<sky-crop src="imageURL"></sky-crop>
-	</sky-swiper-item>
-	<sky-swiper-item>
-		<sky-crop src="imageURL"></sky-crop>
-	</sky-swiper-item>
-	<sky-swiper-item>
-		<sky-crop src="imageURL"></sky-crop>
-	</sky-swiper-item>
-</sky-swiper>
+The `<SkySwiper />` component is now available globally. In essence, the swiper uses the `items` prop in conjunction with the slots to allow you to render any kind of data inside the swiper that your use case calls for.
+
+### Basic markup
+Just content:
+```html
+<SkySwiper
+	:items="[
+		{ imageSrc: '/link-to-image.jpg' },
+		{ imageSrc: '/link-to-image-2.jpg' },
+	]"
+>
+	<div slot="content" slot-scope="{ item }">
+		<!-- Provide a template for rendering the items here, ie: -->
+		<img :src="item.imageSrc" />
+	</div>
+</SkySwiper>
 ```
 
-The contents of `<sky-swiper-item>` could be just about anything. Here we're adding an image with `<sky-crop>`.
+Content and caption:
+```html
+<SkySwiper
+	:items="[
+		{ imageSrc: '/link-to-image.jpg', description: 'Description text 1' },
+		{ imageSrc: '/link-to-image-2.jpg', description: 'Description text 2' },
+	]"
+>
+	<div slot="content" slot-scope="{ item }">
+		<!-- Provide a template for rendering the items here, ie: -->
+		<img :src="item.imageSrc" />
+	</div>
 
-- `src` should be an image URL. Read requirements for url at [sky-crop](https://github.com/skybrud/sky-crop/)
+	<div slot="caption" slot-scope="{ item }">
+		<!-- Provide a template for rendering the caption here, ie: -->
+		<p v-text="item.description" />
+	</div>
+</SkySwiper>
+```
+
+### Props
+The component receives 4 props:
+- `items`: An array (required). Functions as the data layer of the swiper. The array can contain whichever kind of items you need since the content-slot functions as a template for rendering the data as well.
+- `controls`: Configure UI-elements to show inside the swiper content
+- `navigation`: Configure UI-elements to display outside the swiper content
+
+### Slots
+The component provides these basic slots:
+- `"content"` - **Required.**. Uses data from the items prop. Scoped slot with these bindings: `{ item, index }`
+- `"caption"` - Uses data from the items prop. Scoped slot with these bindings: `{ item, index }`
+
+Apart fron these there are more advanced slots for customizing the look in detail (more documentation needed):
+- `"cursor"` - Custom cursor icon. Scoped slot with these bindings: `{ direction, active, pressed }`
+- `"controls-next"` - Custom next icon
+- `"controls-previous"` - Custom previous icon
+- `"navigation-next"` - Custom next icon (in the navigation)
+- `"navigation-previous"` - Custom previous icon (in the navigation)
+- `"bullets"` - Custom icon of the bullets in the navigation. Scoped slot with these bindings: `{ active, index }`
+
+
+## Example
+This basic concept can be expanded upon by using all available slots and configuration props to completely customize the swiper.
+```html
+<SkySwiper
+	:items="[
+		{ imageSrc: '/link-to-image.jpg', description: 'Description text 1' },
+		{ imageSrc: '/link-to-image-2.jpg', description: 'Description text 2' },
+	]"
+	:controls="{
+		next: true,
+		previous: false,
+		cursor: true
+	}"
+	:navigation="{
+		next: true,
+		previous: false,
+		indicator: 'bullets'
+	}"
+>
+	<div slot="content" slot-scope="{ item }">
+		<img :src="item.imageSrc" />
+	</div>
+
+	<div slot="caption" slot-scope="{ item }">
+		<p v-text="item.description" />
+	</div>
+
+	<div slot="cursor" slot-scope="{ direction }">
+		<img v-if="direction === 'next'" src="'/arrow-right.png'" />
+		<img v-if="direction === 'previous'" src="'/arrow-left.png'" />
+	</div>
+
+	<div slot="controls-next">
+		<img src="'/arrow-right.png'" />
+	</div>
+
+	<div slot="navigation-next">
+		<img src="'/arrow-small-right.png'" />
+	</div>
+
+	<div slot="bullet" slot-scope="{ active }">
+		<img v-if="active" src="'/bullet-active.png'" />
+		<img v-else src="'/bullet.png'" />
+	</div>
+</SkySwiper>
+```
+
 
 ## Credits
 
