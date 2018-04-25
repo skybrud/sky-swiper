@@ -254,6 +254,4 @@ export default {
 </script>
 
 <template src="./SkySwiper.html" />
-<style>
-@import './SkySwiper.scss';
-</style>
+<style src="./SkySwiper.scss" />
