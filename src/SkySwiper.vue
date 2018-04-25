@@ -60,7 +60,7 @@ export default {
 					height: 0,
 				},
 				pressed: false,
-				active: true,
+				active: false,
 				touch: {
 					startX: 0,
 					dragX: 0,
