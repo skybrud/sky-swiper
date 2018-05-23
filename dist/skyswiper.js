@@ -70,7 +70,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 39);
+/******/ 	return __webpack_require__(__webpack_require__.s = 42);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -262,7 +262,7 @@ exports.f = {}.propertyIsEnumerable;
 
 var global = __webpack_require__(0);
 var core = __webpack_require__(9);
-var ctx = __webpack_require__(42);
+var ctx = __webpack_require__(45);
 var hide = __webpack_require__(2);
 var has = __webpack_require__(1);
 var PROTOTYPE = 'prototype';
@@ -458,7 +458,7 @@ module.exports = function (name) {
 /* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(40), __esModule: true };
+module.exports = { "default": __webpack_require__(43), __esModule: true };
 
 /***/ }),
 /* 29 */
@@ -488,7 +488,7 @@ module.exports = function (it) {
 
 var has = __webpack_require__(1);
 var toIObject = __webpack_require__(5);
-var arrayIndexOf = __webpack_require__(45)(false);
+var arrayIndexOf = __webpack_require__(48)(false);
 var IE_PROTO = __webpack_require__(19)('IE_PROTO');
 
 module.exports = function (object, names) {
@@ -541,386 +541,6 @@ module.exports = function (it) {
 
 /***/ }),
 /* 35 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var LIBRARY = __webpack_require__(23);
-var $export = __webpack_require__(15);
-var redefine = __webpack_require__(36);
-var hide = __webpack_require__(2);
-var Iterators = __webpack_require__(24);
-var $iterCreate = __webpack_require__(61);
-var setToStringTag = __webpack_require__(25);
-var getPrototypeOf = __webpack_require__(64);
-var ITERATOR = __webpack_require__(6)('iterator');
-var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
-var FF_ITERATOR = '@@iterator';
-var KEYS = 'keys';
-var VALUES = 'values';
-
-var returnThis = function () { return this; };
-
-module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED) {
-  $iterCreate(Constructor, NAME, next);
-  var getMethod = function (kind) {
-    if (!BUGGY && kind in proto) return proto[kind];
-    switch (kind) {
-      case KEYS: return function keys() { return new Constructor(this, kind); };
-      case VALUES: return function values() { return new Constructor(this, kind); };
-    } return function entries() { return new Constructor(this, kind); };
-  };
-  var TAG = NAME + ' Iterator';
-  var DEF_VALUES = DEFAULT == VALUES;
-  var VALUES_BUG = false;
-  var proto = Base.prototype;
-  var $native = proto[ITERATOR] || proto[FF_ITERATOR] || DEFAULT && proto[DEFAULT];
-  var $default = $native || getMethod(DEFAULT);
-  var $entries = DEFAULT ? !DEF_VALUES ? $default : getMethod('entries') : undefined;
-  var $anyNative = NAME == 'Array' ? proto.entries || $native : $native;
-  var methods, key, IteratorPrototype;
-  // Fix native
-  if ($anyNative) {
-    IteratorPrototype = getPrototypeOf($anyNative.call(new Base()));
-    if (IteratorPrototype !== Object.prototype && IteratorPrototype.next) {
-      // Set @@toStringTag to native iterators
-      setToStringTag(IteratorPrototype, TAG, true);
-      // fix for some old engines
-      if (!LIBRARY && typeof IteratorPrototype[ITERATOR] != 'function') hide(IteratorPrototype, ITERATOR, returnThis);
-    }
-  }
-  // fix Array#{values, @@iterator}.name in V8 / FF
-  if (DEF_VALUES && $native && $native.name !== VALUES) {
-    VALUES_BUG = true;
-    $default = function values() { return $native.call(this); };
-  }
-  // Define iterator
-  if ((!LIBRARY || FORCED) && (BUGGY || VALUES_BUG || !proto[ITERATOR])) {
-    hide(proto, ITERATOR, $default);
-  }
-  // Plug for library
-  Iterators[NAME] = $default;
-  Iterators[TAG] = returnThis;
-  if (DEFAULT) {
-    methods = {
-      values: DEF_VALUES ? $default : getMethod(VALUES),
-      keys: IS_SET ? $default : getMethod(KEYS),
-      entries: $entries
-    };
-    if (FORCED) for (key in methods) {
-      if (!(key in proto)) redefine(proto, key, methods[key]);
-    } else $export($export.P + $export.F * (BUGGY || VALUES_BUG), NAME, methods);
-  }
-  return methods;
-};
-
-
-/***/ }),
-/* 36 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(2);
-
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-var anObject = __webpack_require__(10);
-var dPs = __webpack_require__(62);
-var enumBugKeys = __webpack_require__(21);
-var IE_PROTO = __webpack_require__(19)('IE_PROTO');
-var Empty = function () { /* empty */ };
-var PROTOTYPE = 'prototype';
-
-// Create object with fake `null` prototype: use iframe Object with cleared prototype
-var createDict = function () {
-  // Thrash, waste and sodomy: IE GC bug
-  var iframe = __webpack_require__(30)('iframe');
-  var i = enumBugKeys.length;
-  var lt = '<';
-  var gt = '>';
-  var iframeDocument;
-  iframe.style.display = 'none';
-  __webpack_require__(63).appendChild(iframe);
-  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
-  // createDict = iframe.contentWindow.Object;
-  // html.removeChild(iframe);
-  iframeDocument = iframe.contentWindow.document;
-  iframeDocument.open();
-  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
-  iframeDocument.close();
-  createDict = iframeDocument.F;
-  while (i--) delete createDict[PROTOTYPE][enumBugKeys[i]];
-  return createDict();
-};
-
-module.exports = Object.create || function create(O, Properties) {
-  var result;
-  if (O !== null) {
-    Empty[PROTOTYPE] = anObject(O);
-    result = new Empty();
-    Empty[PROTOTYPE] = null;
-    // add "__proto__" for Object.getPrototypeOf polyfill
-    result[IE_PROTO] = O;
-  } else result = createDict();
-  return Properties === undefined ? result : dPs(result, Properties);
-};
-
-
-/***/ }),
-/* 38 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
-var $keys = __webpack_require__(31);
-var hiddenKeys = __webpack_require__(21).concat('length', 'prototype');
-
-exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
-  return $keys(O, hiddenKeys);
-};
-
-
-/***/ }),
-/* 39 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _assign = __webpack_require__(28);
-
-var _assign2 = _interopRequireDefault(_assign);
-
-var _SkySwiper = __webpack_require__(48);
-
-var _SkySwiper2 = _interopRequireDefault(_SkySwiper);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var defaults = {
-	registerComponents: true
-};
-
-exports.default = {
-	install: function install(Vue, options) {
-		var _Object$assign = (0, _assign2.default)({}, defaults, options),
-		    registerComponents = _Object$assign.registerComponents;
-
-		if (registerComponents) {
-			Vue.component(_SkySwiper2.default.name, _SkySwiper2.default);
-		}
-	}
-};
-
-/***/ }),
-/* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(41);
-module.exports = __webpack_require__(9).Object.assign;
-
-
-/***/ }),
-/* 41 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.3.1 Object.assign(target, source)
-var $export = __webpack_require__(15);
-
-$export($export.S + $export.F, 'Object', { assign: __webpack_require__(44) });
-
-
-/***/ }),
-/* 42 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// optional / simple context binding
-var aFunction = __webpack_require__(43);
-module.exports = function (fn, that, length) {
-  aFunction(fn);
-  if (that === undefined) return fn;
-  switch (length) {
-    case 1: return function (a) {
-      return fn.call(that, a);
-    };
-    case 2: return function (a, b) {
-      return fn.call(that, a, b);
-    };
-    case 3: return function (a, b, c) {
-      return fn.call(that, a, b, c);
-    };
-  }
-  return function (/* ...args */) {
-    return fn.apply(that, arguments);
-  };
-};
-
-
-/***/ }),
-/* 43 */
-/***/ (function(module, exports) {
-
-module.exports = function (it) {
-  if (typeof it != 'function') throw TypeError(it + ' is not a function!');
-  return it;
-};
-
-
-/***/ }),
-/* 44 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// 19.1.2.1 Object.assign(target, source, ...)
-var getKeys = __webpack_require__(12);
-var gOPS = __webpack_require__(22);
-var pIE = __webpack_require__(14);
-var toObject = __webpack_require__(34);
-var IObject = __webpack_require__(32);
-var $assign = Object.assign;
-
-// should work with symbols and should have deterministic property order (V8 bug)
-module.exports = !$assign || __webpack_require__(8)(function () {
-  var A = {};
-  var B = {};
-  // eslint-disable-next-line no-undef
-  var S = Symbol();
-  var K = 'abcdefghijklmnopqrst';
-  A[S] = 7;
-  K.split('').forEach(function (k) { B[k] = k; });
-  return $assign({}, A)[S] != 7 || Object.keys($assign({}, B)).join('') != K;
-}) ? function assign(target, source) { // eslint-disable-line no-unused-vars
-  var T = toObject(target);
-  var aLen = arguments.length;
-  var index = 1;
-  var getSymbols = gOPS.f;
-  var isEnum = pIE.f;
-  while (aLen > index) {
-    var S = IObject(arguments[index++]);
-    var keys = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S);
-    var length = keys.length;
-    var j = 0;
-    var key;
-    while (length > j) if (isEnum.call(S, key = keys[j++])) T[key] = S[key];
-  } return T;
-} : $assign;
-
-
-/***/ }),
-/* 45 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// false -> Array#indexOf
-// true  -> Array#includes
-var toIObject = __webpack_require__(5);
-var toLength = __webpack_require__(46);
-var toAbsoluteIndex = __webpack_require__(47);
-module.exports = function (IS_INCLUDES) {
-  return function ($this, el, fromIndex) {
-    var O = toIObject($this);
-    var length = toLength(O.length);
-    var index = toAbsoluteIndex(fromIndex, length);
-    var value;
-    // Array#includes uses SameValueZero equality algorithm
-    // eslint-disable-next-line no-self-compare
-    if (IS_INCLUDES && el != el) while (length > index) {
-      value = O[index++];
-      // eslint-disable-next-line no-self-compare
-      if (value != value) return true;
-    // Array#indexOf ignores holes, Array#includes - not
-    } else for (;length > index; index++) if (IS_INCLUDES || index in O) {
-      if (O[index] === el) return IS_INCLUDES || index || 0;
-    } return !IS_INCLUDES && -1;
-  };
-};
-
-
-/***/ }),
-/* 46 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.1.15 ToLength
-var toInteger = __webpack_require__(18);
-var min = Math.min;
-module.exports = function (it) {
-  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
-};
-
-
-/***/ }),
-/* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var toInteger = __webpack_require__(18);
-var max = Math.max;
-var min = Math.min;
-module.exports = function (index, length) {
-  index = toInteger(index);
-  return index < 0 ? max(index + length, 0) : min(index, length);
-};
-
-
-/***/ }),
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(49)
-
-var Component = __webpack_require__(54)(
-  /* script */
-  __webpack_require__(55),
-  /* template */
-  __webpack_require__(80),
-  /* scopeId */
-  null,
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/mhelmuth/Sites/mhelmuth/skybrud/sky-swiper/src/SkySwiper.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] SkySwiper.vue: functional components are not supported with templates, they should use render functions.")}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 49 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(50);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to SSR context
-__webpack_require__(52)("90b5e316", content, false);
-
-/***/ }),
-/* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(51)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.sky-swiper {\n  position: relative;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.sky-swiper-content {\n  position: relative;\n  overflow: hidden;\n  z-index: 1;\n}\n.sky-swiper-content-item {\n  position: relative;\n  transition: transform 0.2s;\n  overflow: hidden;\n  width: 100%;\n  height: 100%;\n  z-index: 3;\n}\n.sky-swiper-content-item .sky-swiper-content-item-inner {\n    width: 100%;\n    height: 100%;\n    transition: transform 0.2s;\n}\n.sky-swiper-content-item.previous {\n    position: absolute;\n    top: 0;\n    right: 100%;\n    width: 100%;\n    height: 100%;\n    z-index: 2;\n}\n.sky-swiper-content-item.next {\n    position: absolute;\n    top: 0;\n    left: 100%;\n    width: 100%;\n    height: 100%;\n    z-index: 2;\n}\n.sky-swiper-content-item.default-enter-active, .sky-swiper-content-item.default-leave-active {\n    transition: transform 0.5s cubic-bezier(0.5, 0.035, 0.19, 1);\n}\n.sky-swiper-content-item.default-enter-active .sky-swiper-content-item-inner, .sky-swiper-content-item.default-leave-active .sky-swiper-content-item-inner {\n      transition: transform 0.5s cubic-bezier(0.5, 0.035, 0.19, 1);\n}\n.sky-swiper-content-item.default-leave-active {\n    position: absolute;\n    top: 0;\n    left: 0;\n}\n.sky-swiper-content-item.default-enter,\n  .backwards .sky-swiper-content-item.default-leave-to {\n    transform: translateX(100%);\n}\n.sky-swiper-content-item.default-enter .sky-swiper-content-item-inner,\n    .backwards .sky-swiper-content-item.default-leave-to .sky-swiper-content-item-inner {\n      transform: translateX(-95%);\n}\n.sky-swiper-content-item.default-leave-to,\n  .backwards .sky-swiper-content-item.default-enter {\n    transform: translateX(-100%);\n}\n.sky-swiper-content-item.default-leave-to .sky-swiper-content-item-inner,\n    .backwards .sky-swiper-content-item.default-enter .sky-swiper-content-item-inner {\n      transform: translateX(95%);\n}\n.sky-swiper-caption-wrap {\n  position: relative;\n  width: 100%;\n  height: auto;\n  overflow: hidden;\n  z-index: 2;\n  transition: height 0.5s;\n}\n.sky-swiper-caption {\n  position: relative;\n}\n.sky-swiper-caption-item {\n  position: relative;\n}\n.sky-swiper-caption-item.default-enter-active, .sky-swiper-caption-item.default-leave-active {\n    transition: opacity 0.5s;\n}\n.sky-swiper-caption-item.default-enter, .sky-swiper-caption-item.default-leave-to {\n    opacity: 0;\n}\n.sky-swiper-caption-item.default-leave-active {\n    position: absolute;\n}\n.sky-swiper-control {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  width: 15%;\n  margin: 0;\n  padding: 0;\n  border: none;\n  z-index: 5;\n  background-color: transparent;\n  color: #fff;\n  transform: translateX(0%);\n  transition: all 0.3s;\n}\n.sky-swiper-control.next {\n    right: 0;\n}\n.cursor-active .sky-swiper-control.next {\n      opacity: 0;\n      transform: translateX(50%);\n}\n.sky-swiper-control.previous {\n    left: 0;\n}\n.cursor-active .sky-swiper-control.previous {\n      opacity: 0;\n      transform: translateX(-50%);\n}\n.sky-swiper-control-icon {\n  display: block;\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  color: #fff;\n  font-size: 50px;\n}\n.sky-swiper-cursor-area {\n  position: absolute;\n  z-index: 2;\n}\n.cursor-area-content {\n  position: relative;\n  overflow: hidden;\n  cursor: none;\n}\n.sky-swiper-cursor-container {\n  position: absolute;\n  top: 0;\n  left: 0;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 51 */
 /***/ (function(module, exports) {
 
 /*
@@ -1002,10 +622,10 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 52 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var listToStyles = __webpack_require__(53)
+var listToStyles = __webpack_require__(54)
 
 module.exports = function (parentId, list, isProduction) {
   if (typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
@@ -1087,40 +707,7 @@ function renderStyles (styles) {
 
 
 /***/ }),
-/* 53 */
-/***/ (function(module, exports) {
-
-/**
- * Translates the list format produced by css-loader into something
- * easier to manipulate.
- */
-module.exports = function listToStyles (parentId, list) {
-  var styles = []
-  var newStyles = {}
-  for (var i = 0; i < list.length; i++) {
-    var item = list[i]
-    var id = item[0]
-    var css = item[1]
-    var media = item[2]
-    var sourceMap = item[3]
-    var part = {
-      id: parentId + ':' + i,
-      css: css,
-      media: media,
-      sourceMap: sourceMap
-    }
-    if (!newStyles[id]) {
-      styles.push(newStyles[id] = { id: id, parts: [part] })
-    } else {
-      newStyles[id].parts.push(part)
-    }
-  }
-  return styles
-}
-
-
-/***/ }),
-/* 54 */
+/* 37 */
 /***/ (function(module, exports) {
 
 // this module is a runtime utility for cleaner component module output and will
@@ -1177,6 +764,419 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var LIBRARY = __webpack_require__(23);
+var $export = __webpack_require__(15);
+var redefine = __webpack_require__(39);
+var hide = __webpack_require__(2);
+var Iterators = __webpack_require__(24);
+var $iterCreate = __webpack_require__(61);
+var setToStringTag = __webpack_require__(25);
+var getPrototypeOf = __webpack_require__(64);
+var ITERATOR = __webpack_require__(6)('iterator');
+var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
+var FF_ITERATOR = '@@iterator';
+var KEYS = 'keys';
+var VALUES = 'values';
+
+var returnThis = function () { return this; };
+
+module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED) {
+  $iterCreate(Constructor, NAME, next);
+  var getMethod = function (kind) {
+    if (!BUGGY && kind in proto) return proto[kind];
+    switch (kind) {
+      case KEYS: return function keys() { return new Constructor(this, kind); };
+      case VALUES: return function values() { return new Constructor(this, kind); };
+    } return function entries() { return new Constructor(this, kind); };
+  };
+  var TAG = NAME + ' Iterator';
+  var DEF_VALUES = DEFAULT == VALUES;
+  var VALUES_BUG = false;
+  var proto = Base.prototype;
+  var $native = proto[ITERATOR] || proto[FF_ITERATOR] || DEFAULT && proto[DEFAULT];
+  var $default = $native || getMethod(DEFAULT);
+  var $entries = DEFAULT ? !DEF_VALUES ? $default : getMethod('entries') : undefined;
+  var $anyNative = NAME == 'Array' ? proto.entries || $native : $native;
+  var methods, key, IteratorPrototype;
+  // Fix native
+  if ($anyNative) {
+    IteratorPrototype = getPrototypeOf($anyNative.call(new Base()));
+    if (IteratorPrototype !== Object.prototype && IteratorPrototype.next) {
+      // Set @@toStringTag to native iterators
+      setToStringTag(IteratorPrototype, TAG, true);
+      // fix for some old engines
+      if (!LIBRARY && typeof IteratorPrototype[ITERATOR] != 'function') hide(IteratorPrototype, ITERATOR, returnThis);
+    }
+  }
+  // fix Array#{values, @@iterator}.name in V8 / FF
+  if (DEF_VALUES && $native && $native.name !== VALUES) {
+    VALUES_BUG = true;
+    $default = function values() { return $native.call(this); };
+  }
+  // Define iterator
+  if ((!LIBRARY || FORCED) && (BUGGY || VALUES_BUG || !proto[ITERATOR])) {
+    hide(proto, ITERATOR, $default);
+  }
+  // Plug for library
+  Iterators[NAME] = $default;
+  Iterators[TAG] = returnThis;
+  if (DEFAULT) {
+    methods = {
+      values: DEF_VALUES ? $default : getMethod(VALUES),
+      keys: IS_SET ? $default : getMethod(KEYS),
+      entries: $entries
+    };
+    if (FORCED) for (key in methods) {
+      if (!(key in proto)) redefine(proto, key, methods[key]);
+    } else $export($export.P + $export.F * (BUGGY || VALUES_BUG), NAME, methods);
+  }
+  return methods;
+};
+
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(2);
+
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
+var anObject = __webpack_require__(10);
+var dPs = __webpack_require__(62);
+var enumBugKeys = __webpack_require__(21);
+var IE_PROTO = __webpack_require__(19)('IE_PROTO');
+var Empty = function () { /* empty */ };
+var PROTOTYPE = 'prototype';
+
+// Create object with fake `null` prototype: use iframe Object with cleared prototype
+var createDict = function () {
+  // Thrash, waste and sodomy: IE GC bug
+  var iframe = __webpack_require__(30)('iframe');
+  var i = enumBugKeys.length;
+  var lt = '<';
+  var gt = '>';
+  var iframeDocument;
+  iframe.style.display = 'none';
+  __webpack_require__(63).appendChild(iframe);
+  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
+  // createDict = iframe.contentWindow.Object;
+  // html.removeChild(iframe);
+  iframeDocument = iframe.contentWindow.document;
+  iframeDocument.open();
+  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
+  iframeDocument.close();
+  createDict = iframeDocument.F;
+  while (i--) delete createDict[PROTOTYPE][enumBugKeys[i]];
+  return createDict();
+};
+
+module.exports = Object.create || function create(O, Properties) {
+  var result;
+  if (O !== null) {
+    Empty[PROTOTYPE] = anObject(O);
+    result = new Empty();
+    Empty[PROTOTYPE] = null;
+    // add "__proto__" for Object.getPrototypeOf polyfill
+    result[IE_PROTO] = O;
+  } else result = createDict();
+  return Properties === undefined ? result : dPs(result, Properties);
+};
+
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
+var $keys = __webpack_require__(31);
+var hiddenKeys = __webpack_require__(21).concat('length', 'prototype');
+
+exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
+  return $keys(O, hiddenKeys);
+};
+
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _assign = __webpack_require__(28);
+
+var _assign2 = _interopRequireDefault(_assign);
+
+var _SkySwiper = __webpack_require__(51);
+
+var _SkySwiper2 = _interopRequireDefault(_SkySwiper);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var defaults = {
+	registerComponents: true
+};
+
+exports.default = {
+	install: function install(Vue, options) {
+		var _Object$assign = (0, _assign2.default)({}, defaults, options),
+		    registerComponents = _Object$assign.registerComponents;
+
+		if (registerComponents) {
+			Vue.component(_SkySwiper2.default.name, _SkySwiper2.default);
+		}
+	}
+};
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(44);
+module.exports = __webpack_require__(9).Object.assign;
+
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.3.1 Object.assign(target, source)
+var $export = __webpack_require__(15);
+
+$export($export.S + $export.F, 'Object', { assign: __webpack_require__(47) });
+
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// optional / simple context binding
+var aFunction = __webpack_require__(46);
+module.exports = function (fn, that, length) {
+  aFunction(fn);
+  if (that === undefined) return fn;
+  switch (length) {
+    case 1: return function (a) {
+      return fn.call(that, a);
+    };
+    case 2: return function (a, b) {
+      return fn.call(that, a, b);
+    };
+    case 3: return function (a, b, c) {
+      return fn.call(that, a, b, c);
+    };
+  }
+  return function (/* ...args */) {
+    return fn.apply(that, arguments);
+  };
+};
+
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports) {
+
+module.exports = function (it) {
+  if (typeof it != 'function') throw TypeError(it + ' is not a function!');
+  return it;
+};
+
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// 19.1.2.1 Object.assign(target, source, ...)
+var getKeys = __webpack_require__(12);
+var gOPS = __webpack_require__(22);
+var pIE = __webpack_require__(14);
+var toObject = __webpack_require__(34);
+var IObject = __webpack_require__(32);
+var $assign = Object.assign;
+
+// should work with symbols and should have deterministic property order (V8 bug)
+module.exports = !$assign || __webpack_require__(8)(function () {
+  var A = {};
+  var B = {};
+  // eslint-disable-next-line no-undef
+  var S = Symbol();
+  var K = 'abcdefghijklmnopqrst';
+  A[S] = 7;
+  K.split('').forEach(function (k) { B[k] = k; });
+  return $assign({}, A)[S] != 7 || Object.keys($assign({}, B)).join('') != K;
+}) ? function assign(target, source) { // eslint-disable-line no-unused-vars
+  var T = toObject(target);
+  var aLen = arguments.length;
+  var index = 1;
+  var getSymbols = gOPS.f;
+  var isEnum = pIE.f;
+  while (aLen > index) {
+    var S = IObject(arguments[index++]);
+    var keys = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S);
+    var length = keys.length;
+    var j = 0;
+    var key;
+    while (length > j) if (isEnum.call(S, key = keys[j++])) T[key] = S[key];
+  } return T;
+} : $assign;
+
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// false -> Array#indexOf
+// true  -> Array#includes
+var toIObject = __webpack_require__(5);
+var toLength = __webpack_require__(49);
+var toAbsoluteIndex = __webpack_require__(50);
+module.exports = function (IS_INCLUDES) {
+  return function ($this, el, fromIndex) {
+    var O = toIObject($this);
+    var length = toLength(O.length);
+    var index = toAbsoluteIndex(fromIndex, length);
+    var value;
+    // Array#includes uses SameValueZero equality algorithm
+    // eslint-disable-next-line no-self-compare
+    if (IS_INCLUDES && el != el) while (length > index) {
+      value = O[index++];
+      // eslint-disable-next-line no-self-compare
+      if (value != value) return true;
+    // Array#indexOf ignores holes, Array#includes - not
+    } else for (;length > index; index++) if (IS_INCLUDES || index in O) {
+      if (O[index] === el) return IS_INCLUDES || index || 0;
+    } return !IS_INCLUDES && -1;
+  };
+};
+
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.1.15 ToLength
+var toInteger = __webpack_require__(18);
+var min = Math.min;
+module.exports = function (it) {
+  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
+};
+
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var toInteger = __webpack_require__(18);
+var max = Math.max;
+var min = Math.min;
+module.exports = function (index, length) {
+  index = toInteger(index);
+  return index < 0 ? max(index + length, 0) : min(index, length);
+};
+
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(52)
+
+var Component = __webpack_require__(37)(
+  /* script */
+  __webpack_require__(55),
+  /* template */
+  __webpack_require__(85),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/mhelmuth/Sites/mhelmuth/skybrud/sky-swiper/src/SkySwiper.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] SkySwiper.vue: functional components are not supported with templates, they should use render functions.")}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(53);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to SSR context
+__webpack_require__(36)("90b5e316", content, false);
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(35)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.sky-swiper {\n  position: relative;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.sky-swiper-content {\n  position: relative;\n  overflow: hidden;\n  z-index: 1;\n}\n.sky-swiper-content-item {\n  position: relative;\n  transition: transform 0.2s;\n  overflow: hidden;\n  width: 100%;\n  height: 100%;\n  z-index: 3;\n}\n.sky-swiper-content-item .sky-swiper-content-item-inner {\n    width: 100%;\n    height: 100%;\n    transition: transform 0.2s;\n}\n.sky-swiper-content-item.previous {\n    position: absolute;\n    top: 0;\n    right: 100%;\n    width: 100%;\n    height: 100%;\n    z-index: 2;\n}\n.sky-swiper-content-item.next {\n    position: absolute;\n    top: 0;\n    left: 100%;\n    width: 100%;\n    height: 100%;\n    z-index: 2;\n}\n.sky-swiper-content-item.default-enter-active, .sky-swiper-content-item.default-leave-active {\n    transition: transform 0.5s cubic-bezier(0.5, 0.035, 0.19, 1);\n}\n.sky-swiper-content-item.default-enter-active .sky-swiper-content-item-inner, .sky-swiper-content-item.default-leave-active .sky-swiper-content-item-inner {\n      transition: transform 0.5s cubic-bezier(0.5, 0.035, 0.19, 1);\n}\n.sky-swiper-content-item.default-leave-active {\n    position: absolute;\n    top: 0;\n    left: 0;\n}\n.sky-swiper-content-item.default-enter,\n  .backwards .sky-swiper-content-item.default-leave-to {\n    transform: translateX(100%);\n}\n.sky-swiper-content-item.default-enter .sky-swiper-content-item-inner,\n    .backwards .sky-swiper-content-item.default-leave-to .sky-swiper-content-item-inner {\n      transform: translateX(-95%);\n}\n.sky-swiper-content-item.default-leave-to,\n  .backwards .sky-swiper-content-item.default-enter {\n    transform: translateX(-100%);\n}\n.sky-swiper-content-item.default-leave-to .sky-swiper-content-item-inner,\n    .backwards .sky-swiper-content-item.default-enter .sky-swiper-content-item-inner {\n      transform: translateX(95%);\n}\n.sky-swiper-caption-wrap {\n  position: relative;\n  width: 100%;\n  height: auto;\n  overflow: hidden;\n  z-index: 2;\n  transition: height 0.5s;\n}\n.sky-swiper-caption {\n  position: relative;\n}\n.sky-swiper-caption-item {\n  position: relative;\n}\n.sky-swiper-caption-item.default-enter-active, .sky-swiper-caption-item.default-leave-active {\n    transition: opacity 0.5s;\n}\n.sky-swiper-caption-item.default-enter, .sky-swiper-caption-item.default-leave-to {\n    opacity: 0;\n}\n.sky-swiper-caption-item.default-leave-active {\n    position: absolute;\n}\n.sky-swiper-control {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  width: 15%;\n  margin: 0;\n  padding: 0;\n  border: none;\n  z-index: 5;\n  background-color: transparent;\n  color: #fff;\n  transform: translateX(0%);\n  transition: all 0.3s;\n}\n.sky-swiper-control.next {\n    right: 0;\n}\n.cursor-active .sky-swiper-control.next {\n      opacity: 0;\n      transform: translateX(50%);\n}\n.sky-swiper-control.previous {\n    left: 0;\n}\n.cursor-active .sky-swiper-control.previous {\n      opacity: 0;\n      transform: translateX(-50%);\n}\n.sky-swiper-control-icon {\n  display: block;\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  color: #fff;\n  font-size: 50px;\n}\n.sky-swiper-cursor-area {\n  position: absolute;\n  z-index: 2;\n}\n.cursor-area-content {\n  position: relative;\n  overflow: hidden;\n  cursor: none;\n}\n.sky-swiper-cursor-container {\n  position: absolute;\n  top: 0;\n  left: 0;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports) {
+
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+module.exports = function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    }
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
+}
+
+
+/***/ }),
 /* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1195,7 +1195,7 @@ var _assign = __webpack_require__(28);
 
 var _assign2 = _interopRequireDefault(_assign);
 
-var _SkySwiperNavigation = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./SkySwiperNavigation\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+var _SkySwiperNavigation = __webpack_require__(80);
 
 var _SkySwiperNavigation2 = _interopRequireDefault(_SkySwiperNavigation);
 
@@ -1513,7 +1513,7 @@ module.exports = __webpack_require__(26).f('iterator');
 var $at = __webpack_require__(60)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
-__webpack_require__(35)(String, 'String', function (iterated) {
+__webpack_require__(38)(String, 'String', function (iterated) {
   this._t = String(iterated); // target
   this._i = 0;                // next index
 // 21.1.5.2.1 %StringIteratorPrototype%.next()
@@ -1557,7 +1557,7 @@ module.exports = function (TO_STRING) {
 
 "use strict";
 
-var create = __webpack_require__(37);
+var create = __webpack_require__(40);
 var descriptor = __webpack_require__(11);
 var setToStringTag = __webpack_require__(25);
 var IteratorPrototype = {};
@@ -1657,7 +1657,7 @@ var toIObject = __webpack_require__(5);
 // 22.1.3.13 Array.prototype.keys()
 // 22.1.3.29 Array.prototype.values()
 // 22.1.3.30 Array.prototype[@@iterator]()
-module.exports = __webpack_require__(35)(Array, 'Array', function (iterated, kind) {
+module.exports = __webpack_require__(38)(Array, 'Array', function (iterated, kind) {
   this._t = toIObject(iterated); // target
   this._i = 0;                   // next index
   this._k = kind;                // kind
@@ -1727,7 +1727,7 @@ var global = __webpack_require__(0);
 var has = __webpack_require__(1);
 var DESCRIPTORS = __webpack_require__(4);
 var $export = __webpack_require__(15);
-var redefine = __webpack_require__(36);
+var redefine = __webpack_require__(39);
 var META = __webpack_require__(72).KEY;
 var $fails = __webpack_require__(8);
 var shared = __webpack_require__(20);
@@ -1743,7 +1743,7 @@ var isObject = __webpack_require__(7);
 var toIObject = __webpack_require__(5);
 var toPrimitive = __webpack_require__(16);
 var createDesc = __webpack_require__(11);
-var _create = __webpack_require__(37);
+var _create = __webpack_require__(40);
 var gOPNExt = __webpack_require__(75);
 var $GOPD = __webpack_require__(76);
 var $DP = __webpack_require__(3);
@@ -1870,7 +1870,7 @@ if (!USE_NATIVE) {
 
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
-  __webpack_require__(38).f = gOPNExt.f = $getOwnPropertyNames;
+  __webpack_require__(41).f = gOPNExt.f = $getOwnPropertyNames;
   __webpack_require__(14).f = $propertyIsEnumerable;
   __webpack_require__(22).f = $getOwnPropertySymbols;
 
@@ -2054,7 +2054,7 @@ module.exports = Array.isArray || function isArray(arg) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
 var toIObject = __webpack_require__(5);
-var gOPN = __webpack_require__(38).f;
+var gOPN = __webpack_require__(41).f;
 var toString = {}.toString;
 
 var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
@@ -2117,6 +2117,119 @@ __webpack_require__(27)('observable');
 
 /***/ }),
 /* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(81)
+
+var Component = __webpack_require__(37)(
+  /* script */
+  __webpack_require__(83),
+  /* template */
+  __webpack_require__(84),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/mhelmuth/Sites/mhelmuth/skybrud/sky-swiper/src/SkySwiperNavigation.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] SkySwiperNavigation.vue: functional components are not supported with templates, they should use render functions.")}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 81 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(82);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to SSR context
+__webpack_require__(36)("06a489f1", content, false);
+
+/***/ }),
+/* 82 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(35)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.sky-swiper-navigation {\n  position: relative;\n  z-index: 10;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-align: center;\n      align-items: center;\n}\n.sky-swiper-navigation-btn {\n  border: none;\n  background-color: transparent;\n}\n.sky-swiper-bullets {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n  display: -ms-flexbox;\n  display: flex;\n}\n.sky-swiper-bullets li {\n    padding: 0;\n    margin: 0;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 83 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = {
+	name: 'SkySwiperNavigation'
+};
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "sky-swiper-navigation"
+  }, [(_vm.$parent.config.navigation.previous) ? _c('button', {
+    staticClass: "sky-swiper-navigation-btn previous",
+    on: {
+      "click": function($event) {
+        _vm.$parent.goToPrevious()
+      }
+    }
+  }, [_c('span', {
+    staticClass: "sky-swiper-navigation-btn-icon"
+  }, [_vm._t("previous", [_vm._v("\n\t\t\t\t<\n\t\t\t")])], 2)]) : _vm._e(), _vm._v(" "), (_vm.$parent.config.navigation.indicator === 'bullets') ? _c('ul', {
+    staticClass: "sky-swiper-bullets"
+  }, _vm._l((_vm.$parent.items), function(item, index) {
+    return _c('li', [_c('button', {
+      class: {
+        active: index === _vm.$parent.currentIndex,
+      },
+      on: {
+        "click": function($event) {
+          _vm.goTo(index)
+        }
+      }
+    }, [_vm._t("bullet", null, {
+      index: index,
+      active: index === _vm.$parent.currentIndex
+    })], 2)])
+  })) : _vm._e(), _vm._v(" "), (_vm.$parent.config.navigation.indicator === 'pagination') ? _c('div', {
+    staticClass: "sky-swiper-pagination"
+  }, [_vm._v("\n\t\t" + _vm._s(_vm.$parent.currentIndex + 1) + " / " + _vm._s(_vm.$parent.items.length) + "\n\t")]) : _vm._e(), _vm._v(" "), (_vm.$parent.config.navigation.next) ? _c('button', {
+    staticClass: "sky-swiper-navigation-btn next",
+    on: {
+      "click": function($event) {
+        _vm.$parent.goToNext()
+      }
+    }
+  }, [_c('span', {
+    staticClass: "sky-swiper-navigation-btn-icon"
+  }, [_vm._t("next", [_vm._v("\n\t\t\t\t>\n\t\t\t")])], 2)]) : _vm._e()])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 85 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;

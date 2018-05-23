@@ -1,5 +1,5 @@
 <script>
-import SkySwiperNavigation from './SkySwiperNavigation';
+import SkySwiperNavigation from './SkySwiperNavigation.vue';
 
 const defaults = {
 	controls: {
