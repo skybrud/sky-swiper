@@ -1,6 +1,6 @@
 {
   "name": "sky-swiper",
-  "version": "0.0.4",
+  "version": "0.0.5-0",
   "description": "A versatile slot-based Vue swiper component",
   "main": "dist/skyswiper.min.js",
   "scripts": {
