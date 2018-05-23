@@ -62,7 +62,29 @@ Content and caption:
 The component receives 4 props:
 - `items`: An array (required). Functions as the data layer of the swiper. The array can contain whichever kind of items you need since the content-slot functions as a template for rendering the data as well.
 - `controls`: Configure UI-elements to show inside the swiper content
+	```js
+	<SkySwiper :controls="{
+		// show/hide next button on top of swiper content
+		next: true || false,
+		// show/hide previous button on top of swiper content
+		previous: true || false,
+		// show/hide custom cursor control on top of swiper content
+		cursor: true || false,
+	}">
+	```
 - `navigation`: Configure UI-elements to display outside the swiper content
+	```js
+	<SkySwiper :navigation="{
+		// The navigation element can either appear above the figcaption ('caption') or below the slider ('last')
+		location: 'caption' || 'last',
+		// 'none': show no indicators, 'pagination': show slide number (eg. "2/10"), 'bullets': show list of clickable bullets
+		indicator: 'none' || 'pagination' || 'bullets',
+		// show/hide next button in navigation
+		next: true || false,
+		// show/hide previous button in navigation
+		previous: true || false,
+	}">
+	```
 
 ### Slots
 The component provides these basic slots:
@@ -94,6 +116,7 @@ This basic concept can be expanded upon by using all available slots and configu
 	:navigation="{
 		next: true,
 		previous: false,
+		location: 'above-caption'
 		indicator: 'bullets'
 	}"
 >
