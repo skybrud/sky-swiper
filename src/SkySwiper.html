@@ -58,6 +58,20 @@
 				</span>
 			</button>
 		</div>
+		<SkySwiperNavigation
+			v-if="config.navigation.location === 'caption'"
+		>
+			<slot
+				name="navigation-previous"
+				slot="previous"
+			>
+			</slot>
+			<slot
+				name="navigation-next"
+				slot="next"
+			>
+			</slot>
+		</SkySwiperNavigation>
 		<figcaption
 			v-if="$scopedSlots.caption"
 			ref="captionWrap"
@@ -124,57 +138,18 @@
 			</div>
 		</div>
 	</div>
-	<div class="sky-swiper-navigation">
-		<button
-			v-if="config.navigation.previous"
-			@click="goToPrevious()"
-			class="sky-swiper-navigation-btn previous"
+	<SkySwiperNavigation
+		v-if="config.navigation.location === 'last'"
+	>
+		<slot
+			name="navigation-previous"
+			slot="previous"
 		>
-			<span class="sky-swiper-navigation-btn-icon">
-				<slot
-					name="navigation-previous"
-				>
-					<
-				</slot>
-			</span>
-		</button>
-		<ul
-			v-if="config.navigation.indicator === 'bullets'"
-			class="sky-swiper-bullets"
+		</slot>
+		<slot
+			name="navigation-next"
+			slot="next"
 		>
-			<li v-for="(item, index) in items">
-				<button
-					@click="goTo(index)"
-					:class="{
-						active: index === currentIndex,
-					}"
-				>
-					<slot
-						name="bullet"
-						:index="index"
-						:active="index === currentIndex"
-					/>
-				</button>
-			</li>
-		</ul>
-		<div
-			v-if="config.navigation.indicator === 'pagination'"
-			class="sky-swiper-pagination"
-		>
-			{{currentIndex + 1}} / {{items.length}}
-		</div>
-		<button
-			v-if="config.navigation.next"
-			@click="goToNext()"
-			class="sky-swiper-navigation-btn next"
-		>
-			<span class="sky-swiper-navigation-btn-icon">
-				<slot
-					name="navigation-next"
-				>
-					>
-				</slot>
-			</span>
-		</button>
-	</div>
+		</slot>
+	</SkySwiperNavigation>
 </div>

@@ -914,7 +914,7 @@ exports = module.exports = __webpack_require__(51)(false);
 
 
 // module
-exports.push([module.i, "\n.sky-swiper {\n  position: relative;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.sky-swiper-content {\n  position: relative;\n  overflow: hidden;\n  z-index: 1;\n}\n.sky-swiper-content-item {\n  position: relative;\n  transition: transform 0.2s;\n  overflow: hidden;\n  width: 100%;\n  height: 100%;\n  z-index: 3;\n}\n.sky-swiper-content-item .sky-swiper-content-item-inner {\n    width: 100%;\n    height: 100%;\n    transition: transform 0.2s;\n}\n.sky-swiper-content-item.previous {\n    position: absolute;\n    top: 0;\n    right: 100%;\n    width: 100%;\n    height: 100%;\n    z-index: 2;\n}\n.sky-swiper-content-item.next {\n    position: absolute;\n    top: 0;\n    left: 100%;\n    width: 100%;\n    height: 100%;\n    z-index: 2;\n}\n.sky-swiper-content-item.default-enter-active, .sky-swiper-content-item.default-leave-active {\n    transition: transform 0.5s cubic-bezier(0.5, 0.035, 0.19, 1);\n}\n.sky-swiper-content-item.default-enter-active .sky-swiper-content-item-inner, .sky-swiper-content-item.default-leave-active .sky-swiper-content-item-inner {\n      transition: transform 0.5s cubic-bezier(0.5, 0.035, 0.19, 1);\n}\n.sky-swiper-content-item.default-leave-active {\n    position: absolute;\n    top: 0;\n    left: 0;\n}\n.sky-swiper-content-item.default-enter,\n  .backwards .sky-swiper-content-item.default-leave-to {\n    transform: translateX(100%);\n}\n.sky-swiper-content-item.default-enter .sky-swiper-content-item-inner,\n    .backwards .sky-swiper-content-item.default-leave-to .sky-swiper-content-item-inner {\n      transform: translateX(-95%);\n}\n.sky-swiper-content-item.default-leave-to,\n  .backwards .sky-swiper-content-item.default-enter {\n    transform: translateX(-100%);\n}\n.sky-swiper-content-item.default-leave-to .sky-swiper-content-item-inner,\n    .backwards .sky-swiper-content-item.default-enter .sky-swiper-content-item-inner {\n      transform: translateX(95%);\n}\n.sky-swiper-caption-wrap {\n  position: relative;\n  width: 100%;\n  height: auto;\n  overflow: hidden;\n  z-index: 2;\n  transition: height 0.5s;\n}\n.sky-swiper-caption {\n  position: relative;\n}\n.sky-swiper-caption-item {\n  position: relative;\n}\n.sky-swiper-caption-item.default-enter-active, .sky-swiper-caption-item.default-leave-active {\n    transition: opacity 0.5s;\n}\n.sky-swiper-caption-item.default-enter, .sky-swiper-caption-item.default-leave-to {\n    opacity: 0;\n}\n.sky-swiper-caption-item.default-leave-active {\n    position: absolute;\n}\n.sky-swiper-control {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  width: 15%;\n  margin: 0;\n  padding: 0;\n  border: none;\n  z-index: 5;\n  background-color: transparent;\n  color: #fff;\n  transform: translateX(0%);\n  transition: all 0.3s;\n}\n.sky-swiper-control.next {\n    right: 0;\n}\n.cursor-active .sky-swiper-control.next {\n      opacity: 0;\n      transform: translateX(50%);\n}\n.sky-swiper-control.previous {\n    left: 0;\n}\n.cursor-active .sky-swiper-control.previous {\n      opacity: 0;\n      transform: translateX(-50%);\n}\n.sky-swiper-control-icon {\n  display: block;\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  color: #fff;\n  font-size: 50px;\n}\n.sky-swiper-cursor-area {\n  position: absolute;\n  z-index: 2;\n}\n.cursor-area-content {\n  position: relative;\n  overflow: hidden;\n  cursor: none;\n}\n.sky-swiper-cursor-container {\n  position: absolute;\n  top: 0;\n  left: 0;\n}\n.sky-swiper-navigation {\n  position: relative;\n  z-index: 10;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-align: center;\n      align-items: center;\n}\n.sky-swiper-navigation-btn {\n  border: none;\n  background-color: transparent;\n}\n.sky-swiper-bullets {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n  display: -ms-flexbox;\n  display: flex;\n}\n.sky-swiper-bullets li {\n    padding: 0;\n    margin: 0;\n}\n", ""]);
+exports.push([module.i, "\n.sky-swiper {\n  position: relative;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.sky-swiper-content {\n  position: relative;\n  overflow: hidden;\n  z-index: 1;\n}\n.sky-swiper-content-item {\n  position: relative;\n  transition: transform 0.2s;\n  overflow: hidden;\n  width: 100%;\n  height: 100%;\n  z-index: 3;\n}\n.sky-swiper-content-item .sky-swiper-content-item-inner {\n    width: 100%;\n    height: 100%;\n    transition: transform 0.2s;\n}\n.sky-swiper-content-item.previous {\n    position: absolute;\n    top: 0;\n    right: 100%;\n    width: 100%;\n    height: 100%;\n    z-index: 2;\n}\n.sky-swiper-content-item.next {\n    position: absolute;\n    top: 0;\n    left: 100%;\n    width: 100%;\n    height: 100%;\n    z-index: 2;\n}\n.sky-swiper-content-item.default-enter-active, .sky-swiper-content-item.default-leave-active {\n    transition: transform 0.5s cubic-bezier(0.5, 0.035, 0.19, 1);\n}\n.sky-swiper-content-item.default-enter-active .sky-swiper-content-item-inner, .sky-swiper-content-item.default-leave-active .sky-swiper-content-item-inner {\n      transition: transform 0.5s cubic-bezier(0.5, 0.035, 0.19, 1);\n}\n.sky-swiper-content-item.default-leave-active {\n    position: absolute;\n    top: 0;\n    left: 0;\n}\n.sky-swiper-content-item.default-enter,\n  .backwards .sky-swiper-content-item.default-leave-to {\n    transform: translateX(100%);\n}\n.sky-swiper-content-item.default-enter .sky-swiper-content-item-inner,\n    .backwards .sky-swiper-content-item.default-leave-to .sky-swiper-content-item-inner {\n      transform: translateX(-95%);\n}\n.sky-swiper-content-item.default-leave-to,\n  .backwards .sky-swiper-content-item.default-enter {\n    transform: translateX(-100%);\n}\n.sky-swiper-content-item.default-leave-to .sky-swiper-content-item-inner,\n    .backwards .sky-swiper-content-item.default-enter .sky-swiper-content-item-inner {\n      transform: translateX(95%);\n}\n.sky-swiper-caption-wrap {\n  position: relative;\n  width: 100%;\n  height: auto;\n  overflow: hidden;\n  z-index: 2;\n  transition: height 0.5s;\n}\n.sky-swiper-caption {\n  position: relative;\n}\n.sky-swiper-caption-item {\n  position: relative;\n}\n.sky-swiper-caption-item.default-enter-active, .sky-swiper-caption-item.default-leave-active {\n    transition: opacity 0.5s;\n}\n.sky-swiper-caption-item.default-enter, .sky-swiper-caption-item.default-leave-to {\n    opacity: 0;\n}\n.sky-swiper-caption-item.default-leave-active {\n    position: absolute;\n}\n.sky-swiper-control {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  width: 15%;\n  margin: 0;\n  padding: 0;\n  border: none;\n  z-index: 5;\n  background-color: transparent;\n  color: #fff;\n  transform: translateX(0%);\n  transition: all 0.3s;\n}\n.sky-swiper-control.next {\n    right: 0;\n}\n.cursor-active .sky-swiper-control.next {\n      opacity: 0;\n      transform: translateX(50%);\n}\n.sky-swiper-control.previous {\n    left: 0;\n}\n.cursor-active .sky-swiper-control.previous {\n      opacity: 0;\n      transform: translateX(-50%);\n}\n.sky-swiper-control-icon {\n  display: block;\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  color: #fff;\n  font-size: 50px;\n}\n.sky-swiper-cursor-area {\n  position: absolute;\n  z-index: 2;\n}\n.cursor-area-content {\n  position: relative;\n  overflow: hidden;\n  cursor: none;\n}\n.sky-swiper-cursor-container {\n  position: absolute;\n  top: 0;\n  left: 0;\n}\n", ""]);
 
 // exports
 
@@ -1195,6 +1195,10 @@ var _assign = __webpack_require__(28);
 
 var _assign2 = _interopRequireDefault(_assign);
 
+var _SkySwiperNavigation = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./SkySwiperNavigation\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+
+var _SkySwiperNavigation2 = _interopRequireDefault(_SkySwiperNavigation);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var defaults = {
@@ -1204,6 +1208,7 @@ var defaults = {
 		cursor: false
 	},
 	navigation: {
+		location: 'caption',
 		indicator: 'none',
 		next: false,
 		previous: false
@@ -1216,6 +1221,9 @@ var defaults = {
 
 exports.default = {
 	name: 'SkySwiper',
+	components: {
+		SkySwiperNavigation: _SkySwiperNavigation2.default
+	},
 	props: {
 		items: {
 			type: Array,
@@ -2168,7 +2176,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     domProps: {
       "textContent": _vm._s('>')
     }
-  })])], 2)]) : _vm._e()], 1), _vm._v(" "), (_vm.$scopedSlots.caption) ? _c('figcaption', {
+  })])], 2)]) : _vm._e()], 1), _vm._v(" "), (_vm.config.navigation.location === 'caption') ? _c('SkySwiperNavigation', [_vm._t("navigation-previous", null, {
+    slot: "previous"
+  }), _vm._v(" "), _vm._t("navigation-next", null, {
+    slot: "next"
+  })], 2) : _vm._e(), _vm._v(" "), (_vm.$scopedSlots.caption) ? _c('figcaption', {
     ref: "captionWrap",
     staticClass: "sky-swiper-caption-wrap",
     style: (_vm.caption.style)
@@ -2189,7 +2201,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       item: item,
       index: index
     })], 2)]) : _vm._e()
-  }))], 1)]) : _vm._e()]), _vm._v(" "), (_vm.config.controls.cursor && !_vm.cursorProps.touch.active) ? _c('div', {
+  }))], 1)]) : _vm._e()], 1), _vm._v(" "), (_vm.config.controls.cursor && !_vm.cursorProps.touch.active) ? _c('div', {
     staticClass: "sky-swiper-cursor-area",
     style: (_vm.cursorAreaStylePadded),
     on: {
@@ -2217,45 +2229,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     direction: _vm.cursorDirection,
     active: _vm.cursorProps.active,
     pressed: _vm.cursorProps.pressed
-  })], 2)])])]) : _vm._e(), _vm._v(" "), _c('div', {
-    staticClass: "sky-swiper-navigation"
-  }, [(_vm.config.navigation.previous) ? _c('button', {
-    staticClass: "sky-swiper-navigation-btn previous",
-    on: {
-      "click": function($event) {
-        _vm.goToPrevious()
-      }
-    }
-  }, [_c('span', {
-    staticClass: "sky-swiper-navigation-btn-icon"
-  }, [_vm._t("navigation-previous", [_vm._v("\n\t\t\t\t\t<\n\t\t\t\t")])], 2)]) : _vm._e(), _vm._v(" "), (_vm.config.navigation.indicator === 'bullets') ? _c('ul', {
-    staticClass: "sky-swiper-bullets"
-  }, _vm._l((_vm.items), function(item, index) {
-    return _c('li', [_c('button', {
-      class: {
-        active: index === _vm.currentIndex,
-      },
-      on: {
-        "click": function($event) {
-          _vm.goTo(index)
-        }
-      }
-    }, [_vm._t("bullet", null, {
-      index: index,
-      active: index === _vm.currentIndex
-    })], 2)])
-  })) : _vm._e(), _vm._v(" "), (_vm.config.navigation.indicator === 'pagination') ? _c('div', {
-    staticClass: "sky-swiper-pagination"
-  }, [_vm._v("\n\t\t\t" + _vm._s(_vm.currentIndex + 1) + " / " + _vm._s(_vm.items.length) + "\n\t\t")]) : _vm._e(), _vm._v(" "), (_vm.config.navigation.next) ? _c('button', {
-    staticClass: "sky-swiper-navigation-btn next",
-    on: {
-      "click": function($event) {
-        _vm.goToNext()
-      }
-    }
-  }, [_c('span', {
-    staticClass: "sky-swiper-navigation-btn-icon"
-  }, [_vm._t("navigation-next", [_vm._v("\n\t\t\t\t\t>\n\t\t\t\t")])], 2)]) : _vm._e()])])
+  })], 2)])])]) : _vm._e(), _vm._v(" "), (_vm.config.navigation.location === 'last') ? _c('SkySwiperNavigation', [_vm._t("navigation-previous", null, {
+    slot: "previous"
+  }), _vm._v(" "), _vm._t("navigation-next", null, {
+    slot: "next"
+  })], 2) : _vm._e()], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 

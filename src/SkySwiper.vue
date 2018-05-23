@@ -1,4 +1,6 @@
 <script>
+import SkySwiperNavigation from './SkySwiperNavigation';
+
 const defaults = {
 	controls: {
 		next: true,
@@ -6,6 +8,7 @@ const defaults = {
 		cursor: false,
 	},
 	navigation: {
+		location: 'caption', // can be either 'caption' or 'last'
 		indicator: 'none', // can be either 'none', 'pagination' or 'bullets'
 		next: false,
 		previous: false,
@@ -18,6 +21,9 @@ const defaults = {
 
 export default {
 	name: 'SkySwiper',
+	components: {
+		SkySwiperNavigation,
+	},
 	props: {
 		items: {
 			type: Array,
