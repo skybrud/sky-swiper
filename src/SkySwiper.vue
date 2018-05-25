@@ -8,7 +8,7 @@ const defaults = {
 		cursor: false,
 	},
 	navigation: {
-		location: 'caption', // can be either 'caption' or 'last'
+		location: 'before-caption', // can be either 'before-caption' or 'after-caption'
 		indicator: 'none', // can be either 'none', 'pagination' or 'bullets'
 		next: false,
 		previous: false,

@@ -59,7 +59,7 @@
 			</button>
 		</div>
 		<SkySwiperNavigation
-			v-if="config.navigation.location === 'caption'"
+			v-if="config.navigation.location === 'before-caption'"
 		>
 			<slot
 				name="navigation-previous"
@@ -139,7 +139,7 @@
 		</div>
 	</div>
 	<SkySwiperNavigation
-		v-if="config.navigation.location === 'last'"
+		v-if="config.navigation.location === 'after-caption'"
 	>
 		<slot
 			name="navigation-previous"

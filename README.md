@@ -75,8 +75,8 @@ The component receives 4 props:
 - `navigation`: Configure UI-elements to display outside the swiper content
 	```js
 	<SkySwiper :navigation="{
-		// The navigation element can either appear above the figcaption ('caption') or below the slider ('last')
-		location: 'caption' || 'last',
+		// The navigation element can either appear above the figcaption ('before-caption') or below ('after-caption')
+		location: 'before-caption' || 'after-caption',
 		// 'none': show no indicators, 'pagination': show slide number (eg. "2/10"), 'bullets': show list of clickable bullets
 		indicator: 'none' || 'pagination' || 'bullets',
 		// show/hide next button in navigation
