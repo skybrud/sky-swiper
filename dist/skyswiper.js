@@ -1208,7 +1208,7 @@ var defaults = {
 		cursor: false
 	},
 	navigation: {
-		location: 'caption',
+		location: 'before-caption',
 		indicator: 'none',
 		next: false,
 		previous: false
@@ -2206,7 +2206,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       },
       on: {
         "click": function($event) {
-          _vm.goTo(index)
+          _vm.$parent.goTo(index)
         }
       }
     }, [_vm._t("bullet", null, {
@@ -2289,11 +2289,30 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     domProps: {
       "textContent": _vm._s('>')
     }
-  })])], 2)]) : _vm._e()], 1), _vm._v(" "), (_vm.config.navigation.location === 'caption') ? _c('SkySwiperNavigation', [_vm._t("navigation-previous", null, {
+  })])], 2)]) : _vm._e()], 1), _vm._v(" "), (_vm.config.navigation.location === 'before-caption') ? _c('SkySwiperNavigation', {
+    scopedSlots: _vm._u([{
+      key: "bullet",
+      fn: function(ref) {
+        var active = ref.active;
+        var index = ref.index;
+
+        return _c('div', {}, [_vm._t("bullets", null, {
+          active: active,
+          index: index
+        })], 2)
+      }
+    }])
+  }, [_c('div', {
+    attrs: {
+      "slot": "previous"
+    },
     slot: "previous"
-  }), _vm._v(" "), _vm._t("navigation-next", null, {
+  }, [_vm._t("navigation-previous")], 2), _vm._v(" "), _c('div', {
+    attrs: {
+      "slot": "next"
+    },
     slot: "next"
-  })], 2) : _vm._e(), _vm._v(" "), (_vm.$scopedSlots.caption) ? _c('figcaption', {
+  }, [_vm._t("navigation-next")], 2)]) : _vm._e(), _vm._v(" "), (_vm.$scopedSlots.caption) ? _c('figcaption', {
     ref: "captionWrap",
     staticClass: "sky-swiper-caption-wrap",
     style: (_vm.caption.style)
@@ -2342,7 +2361,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     direction: _vm.cursorDirection,
     active: _vm.cursorProps.active,
     pressed: _vm.cursorProps.pressed
-  })], 2)])])]) : _vm._e(), _vm._v(" "), (_vm.config.navigation.location === 'last') ? _c('SkySwiperNavigation', [_vm._t("navigation-previous", null, {
+  })], 2)])])]) : _vm._e(), _vm._v(" "), (_vm.config.navigation.location === 'after-caption') ? _c('SkySwiperNavigation', [_vm._t("navigation-previous", null, {
     slot: "previous"
   }), _vm._v(" "), _vm._t("navigation-next", null, {
     slot: "next"

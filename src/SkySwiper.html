@@ -61,16 +61,26 @@
 		<SkySwiperNavigation
 			v-if="config.navigation.location === 'before-caption'"
 		>
-			<slot
-				name="navigation-previous"
+			<div
 				slot="previous"
 			>
-			</slot>
-			<slot
-				name="navigation-next"
+				<slot name="navigation-previous" />
+			</div>
+			<div
 				slot="next"
 			>
-			</slot>
+				<slot name="navigation-next" />
+			</div>
+			<div
+				slot="bullet"
+				slot-scope="{ active, index }"
+			>
+				<slot
+					name="bullets"
+					:active="active"
+					:index="index"
+				/>
+			</div>
 		</SkySwiperNavigation>
 		<figcaption
 			v-if="$scopedSlots.caption"
