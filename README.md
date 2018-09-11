@@ -17,6 +17,9 @@ Begin by importing and installing the SkySwiper Vue plugin
 import Vue from 'vue';
 import SkySwiper from 'sky-swiper';
 
+// If you want to use the baseline scss add the following line
+import '${YOUR-PROJECT-ROOT-PATH}/node_modules/sky-swiper/src/SkySwiper.scss';
+
 Vue.use(SkySwiper);
 
 ```
