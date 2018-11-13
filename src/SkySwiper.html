@@ -1,165 +1,172 @@
-<div :class="['sky-swiper', direction, `slide-${currentIndex}`, {
-	'cursor-active': cursorProps.active
+<div :class="['sky-swiper', api.states.direction, `slide-${api.states.currentIndex}`, {
+	'cursor-active': api.states.cursor.active
 }]">
-	<figure
-		class="sky-swiper-wrap"
+	<slot
+		:touch="api.touch"
+		:cursor="api.cursor"
+		:goTo="api.navigation"
+		:states="api.states"
 	>
-		<div
-			ref="content"
-			@touchstart="onTouchstart"
-			@touchmove="onTouchmove"
-			@touchend="onTouchend"
-			@touchcancel="onTouchend"
-			:class="['sky-swiper-content', direction]"
-		>
-			<transition
-				:name="config.animation.content"
-			>
-				<div
-					:key="currentIndex"
-					keep-alive
-					class="sky-swiper-content-item"
-				>
-					<div
-						class="sky-swiper-content-item-inner"
-					>
-						<slot
-							name="content"
-							:item="items[currentIndex]"
-							:index="currentIndex"
-						/>
-					</div>
-				</div>
-			</transition>
-			<button
-				v-if="config.controls.previous"
-				@click="goToPrevious()"
-				class="sky-swiper-control previous"
-			>
-				<span class="sky-swiper-control-icon">
-					<slot
-						name="controls-previous"
-					>
-						<span v-text="'<'" />
-					</slot>
-				</span>
-			</button>
-			<button
-				v-if="config.controls.next"
-				@click="goToNext()"
-				class="sky-swiper-control next"
-			>
-				<span class="sky-swiper-control-icon">
-					<slot
-						name="controls-next"
-					>
-						<span v-text="'>'" />
-					</slot>
-				</span>
-			</button>
-		</div>
-		<SkySwiperNavigation
-			v-if="config.navigation.location === 'before-caption'"
+		<figure
+			class="sky-swiper-wrap"
 		>
 			<div
-				slot="previous"
-			>
-				<slot name="navigation-previous" />
-			</div>
-			<div
-				slot="next"
-			>
-				<slot name="navigation-next" />
-			</div>
-			<div
-				slot="bullet"
-				slot-scope="{ active, index }"
-			>
-				<slot
-					name="bullets"
-					:active="active"
-					:index="index"
-				/>
-			</div>
-		</SkySwiperNavigation>
-		<figcaption
-			v-if="$scopedSlots.caption"
-			ref="captionWrap"
-			:style="caption.style"
-			class="sky-swiper-caption-wrap"
-		>
-			<div
-				ref="caption"
-				class="sky-swiper-caption"
+				ref="content"
+				@touchstart="onTouchstart"
+				@touchmove="onTouchmove"
+				@touchend="onTouchend"
+				@touchcancel="onTouchend"
+				:class="['sky-swiper-content', api.states.direction]"
 			>
 				<transition
-					:name="config.animation.caption"
+					:name="config.animation.content"
 				>
 					<div
-						v-for="(item, index) in items"
-						v-if="index === currentIndex"
-						:key="index"
-						class="sky-swiper-caption-item"
+						:key="api.states.currentIndex"
+						keep-alive
+						class="sky-swiper-content-item"
 					>
-						<div class="sky-swiper-caption-item-inner">
+						<div
+							class="sky-swiper-content-item-inner"
+						>
 							<slot
-								name="caption"
-								:item="item"
-								:index="index"
+								name="content"
+								:item="items[api.states.currentIndex]"
+								:index="api.states.currentIndex"
 							/>
 						</div>
 					</div>
 				</transition>
+				<button
+					v-if="config.controls.previous"
+					@click="goToPrevious()"
+					class="sky-swiper-control previous"
+				>
+					<span class="sky-swiper-control-icon">
+						<slot
+							name="controls-previous"
+						>
+							<span v-text="'<'" />
+						</slot>
+					</span>
+				</button>
+				<button
+					v-if="config.controls.next"
+					@click="goToNext()"
+					class="sky-swiper-control next"
+				>
+					<span class="sky-swiper-control-icon">
+						<slot
+							name="controls-next"
+						>
+							<span v-text="'>'" />
+						</slot>
+					</span>
+				</button>
 			</div>
-		</figcaption>
-	</figure>
-	<div
-		v-if="config.controls.cursor && !cursorProps.touch.active"
-		:style="cursorAreaStylePadded"
-		@mouseenter="onCursorEnter"
-		@mouseleave="onCursorLeave"
-		@mousemove="onCursorMove"
-		@mousedown="onCursorDown"
-		@mouseup="onCursorUp"
-		class="sky-swiper-cursor-area"
-	>
-		<div
-			@click="onCursorClick"
-			:style="cursorAreaStyle"
-			class="cursor-area-content"
-		>
-			<div
-				:style="cursorStyle"
-				class="sky-swiper-cursor-container"
+			<SkySwiperNavigation
+				v-if="config.navigation.location === 'before-caption'"
 			>
 				<div
-					ref="cursor"
-					:class="['sky-swiper-cursor', cursorDirection, {
-						pressed: cursorProps.pressed
-					}]"
+					slot="previous"
+				>
+					<slot name="navigation-previous" />
+				</div>
+				<div
+					slot="next"
+				>
+					<slot name="navigation-next" />
+				</div>
+				<div
+					slot="bullet"
+					slot-scope="{ active, index }"
 				>
 					<slot
-						name="cursor"
-						:direction="cursorDirection"
-						:active="cursorProps.active"
-						:pressed="cursorProps.pressed"
+						name="bullets"
+						:active="active"
+						:index="index"
 					/>
+				</div>
+			</SkySwiperNavigation>
+			<figcaption
+				v-if="$scopedSlots.caption"
+				ref="captionWrap"
+				:style="caption.style"
+				class="sky-swiper-caption-wrap"
+			>
+				<div
+					ref="caption"
+					class="sky-swiper-caption"
+				>
+					<transition
+						:name="config.animation.caption"
+					>
+						<div
+							v-for="(item, index) in items"
+							v-if="index === api.states.currentIndex"
+							:key="index"
+							class="sky-swiper-caption-item"
+						>
+							<div class="sky-swiper-caption-item-inner">
+								<slot
+									name="caption"
+									:item="item"
+									:index="index"
+								/>
+							</div>
+						</div>
+					</transition>
+				</div>
+			</figcaption>
+		</figure>
+		<div
+			v-if="config.controls.cursor && !cursorProps.touch.active"
+			:style="cursorAreaStylePadded"
+			@mouseenter="onCursorEnter"
+			@mouseleave="onCursorLeave"
+			@mousemove="onCursorMove"
+			@mousedown="onCursorDown"
+			@mouseup="onCursorUp"
+			class="sky-swiper-cursor-area"
+		>
+			<div
+				@click="onCursorClick"
+				:style="cursorAreaStyle"
+				class="cursor-area-content"
+			>
+				<div
+					:style="cursorStyle"
+					class="sky-swiper-cursor-container"
+				>
+					<div
+						ref="cursor"
+						:class="['sky-swiper-cursor', cursorDirection, {
+							pressed: api.states.cursor.pressed
+						}]"
+					>
+						<slot
+							name="cursor"
+							:direction="cursorDirection"
+							:active="api.states.cursor.active"
+							:pressed="api.states.cursor.pressed"
+						/>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<SkySwiperNavigation
-		v-if="config.navigation.location === 'after-caption'"
-	>
-		<slot
-			name="navigation-previous"
-			slot="previous"
+		<SkySwiperNavigation
+			v-if="config.navigation.location === 'after-caption'"
 		>
-		</slot>
-		<slot
-			name="navigation-next"
-			slot="next"
-		>
-		</slot>
-	</SkySwiperNavigation>
+			<slot
+				name="navigation-previous"
+				slot="previous"
+			>
+			</slot>
+			<slot
+				name="navigation-next"
+				slot="next"
+			>
+			</slot>
+		</SkySwiperNavigation>
+	</slot>
 </div>
