@@ -175,7 +175,7 @@ var script$1 = {
 	props: {
 		items: {
 			type: Array,
-			required: true,
+			// required: true,
 		},
 		controls: {
 			type: Object,
