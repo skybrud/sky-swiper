@@ -196,8 +196,38 @@ var script$1 = {
 	},
 	data() {
 		return {
-			direction: 'forwards',
-			currentIndex: 0,
+			api: {
+				cursor: {
+					enter: this.onCursorEnter,
+					leave: this.onCursorLeave,
+					move: this.onCursorMove,
+					down: this.onCursorDown,
+					up: this.onCursorUp,
+					click: this.onCursorClick,
+				},
+				touch: {
+					start: this.onTouchstart,
+					move: this.onTouchmove,
+					end: this.onTouchend,
+					cancel: this.onTouchend,
+				},
+				navigation: {
+					previous: this.goToPrevious,
+					next: this.goToNext,
+					index: this.goTo,
+				},
+				states: {
+					currentIndex: 0,
+					direction: 'forwards',
+					cursor: {
+						active: false,
+						pressed: false,
+						direction: this.cursorDirection,
+					}
+				},
+			},
+			// direction: 'forwards',
+			// currentIndex: 0,
 			scroll: {
 				x: 0,
 				y: 0,
@@ -217,8 +247,8 @@ var script$1 = {
 					width: 0,
 					height: 0,
 				},
-				pressed: false,
-				active: false,
+				// pressed: false,
+				// active: false,
 				touch: {
 					startX: 0,
 					dragX: 0,
@@ -319,20 +349,20 @@ var script$1 = {
 		goTo(index) {
 			const itemsLength = this.items.length;
 			const to = (itemsLength + index) % itemsLength;
-			const distanceForwards = (to - this.currentIndex + itemsLength) % itemsLength;
+			const distanceForwards = (to - this.api.states.currentIndex + itemsLength) % itemsLength;
 			const distanceBackwards = Math.abs(distanceForwards - itemsLength);
-			this.direction = (distanceBackwards < distanceForwards) ? 'backwards' : 'forwards';
-			this.currentIndex = to;
+			this.api.states.direction = (distanceBackwards < distanceForwards) ? 'backwards' : 'forwards';
+			this.api.states.currentIndex = to;
 			this.$nextTick(this.captionChangeSize);
 			this.$emit('change', index);
 		},
 		goToNext() {
-			this.goTo(this.currentIndex + 1);
-			this.$emit('next', this.currentIndex + 1);
+			this.goTo(this.api.states.currentIndex + 1);
+			this.$emit('next', this.api.states.currentIndex + 1);
 		},
 		goToPrevious() {
-			this.goTo(this.currentIndex - 1);
-			this.$emit('previous', this.currentIndex - 1);
+			this.goTo(this.api.states.currentIndex - 1);
+			this.$emit('previous', this.api.states.currentIndex - 1);
 		},
 		captionChangeSize() {
 			if (this.$refs.caption) {
@@ -414,14 +444,14 @@ var script$1 = {
             const __vue_script__$1 = script$1;
             
 /* template */
-var __vue_render__$1 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:['sky-swiper', _vm.direction, ("slide-" + _vm.currentIndex), {
-	'cursor-active': _vm.cursorProps.active
-}]},[_c('figure',{staticClass:"sky-swiper-wrap"},[_c('div',{ref:"content",class:['sky-swiper-content', _vm.direction],on:{"touchstart":_vm.onTouchstart,"touchmove":_vm.onTouchmove,"touchend":_vm.onTouchend,"touchcancel":_vm.onTouchend}},[_c('transition',{attrs:{"name":_vm.config.animation.content}},[_c('div',{key:_vm.currentIndex,staticClass:"sky-swiper-content-item",attrs:{"keep-alive":""}},[_c('div',{staticClass:"sky-swiper-content-item-inner"},[_vm._t("content",null,{item:_vm.items[_vm.currentIndex],index:_vm.currentIndex})],2)])]),_vm._v(" "),(_vm.config.controls.previous)?_c('button',{staticClass:"sky-swiper-control previous",on:{"click":function($event){_vm.goToPrevious();}}},[_c('span',{staticClass:"sky-swiper-control-icon"},[_vm._t("controls-previous",[_c('span',{domProps:{"textContent":_vm._s('<')}})])],2)]):_vm._e(),_vm._v(" "),(_vm.config.controls.next)?_c('button',{staticClass:"sky-swiper-control next",on:{"click":function($event){_vm.goToNext();}}},[_c('span',{staticClass:"sky-swiper-control-icon"},[_vm._t("controls-next",[_c('span',{domProps:{"textContent":_vm._s('>')}})])],2)]):_vm._e()],1),_vm._v(" "),(_vm.config.navigation.location === 'before-caption')?_c('SkySwiperNavigation',{scopedSlots:_vm._u([{key:"bullet",fn:function(ref){
+var __vue_render__$1 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:['sky-swiper', _vm.api.states.direction, ("slide-" + (_vm.api.states.currentIndex)), {
+	'cursor-active': _vm.api.states.cursor.active
+}]},[_vm._t("default",[_c('figure',{staticClass:"sky-swiper-wrap"},[_c('div',{ref:"content",class:['sky-swiper-content', _vm.api.states.direction],on:{"touchstart":_vm.onTouchstart,"touchmove":_vm.onTouchmove,"touchend":_vm.onTouchend,"touchcancel":_vm.onTouchend}},[_c('transition',{attrs:{"name":_vm.config.animation.content}},[_c('div',{key:_vm.api.states.currentIndex,staticClass:"sky-swiper-content-item",attrs:{"keep-alive":""}},[_c('div',{staticClass:"sky-swiper-content-item-inner"},[_vm._t("content",null,{item:_vm.items[_vm.api.states.currentIndex],index:_vm.api.states.currentIndex})],2)])]),_vm._v(" "),(_vm.config.controls.previous)?_c('button',{staticClass:"sky-swiper-control previous",on:{"click":function($event){_vm.goToPrevious();}}},[_c('span',{staticClass:"sky-swiper-control-icon"},[_vm._t("controls-previous",[_c('span',{domProps:{"textContent":_vm._s('<')}})])],2)]):_vm._e(),_vm._v(" "),(_vm.config.controls.next)?_c('button',{staticClass:"sky-swiper-control next",on:{"click":function($event){_vm.goToNext();}}},[_c('span',{staticClass:"sky-swiper-control-icon"},[_vm._t("controls-next",[_c('span',{domProps:{"textContent":_vm._s('>')}})])],2)]):_vm._e()],1),_vm._v(" "),(_vm.config.navigation.location === 'before-caption')?_c('SkySwiperNavigation',{scopedSlots:_vm._u([{key:"bullet",fn:function(ref){
 var active = ref.active;
 var index = ref.index;
-return _c('div',{},[_vm._t("bullets",null,{active:active,index:index})],2)}}])},[_c('div',{attrs:{"slot":"previous"},slot:"previous"},[_vm._t("navigation-previous")],2),_vm._v(" "),_c('div',{attrs:{"slot":"next"},slot:"next"},[_vm._t("navigation-next")],2)]):_vm._e(),_vm._v(" "),(_vm.$scopedSlots.caption)?_c('figcaption',{ref:"captionWrap",staticClass:"sky-swiper-caption-wrap",style:(_vm.caption.style)},[_c('div',{ref:"caption",staticClass:"sky-swiper-caption"},[_c('transition',{attrs:{"name":_vm.config.animation.caption}},_vm._l((_vm.items),function(item,index){return (index === _vm.currentIndex)?_c('div',{key:index,staticClass:"sky-swiper-caption-item"},[_c('div',{staticClass:"sky-swiper-caption-item-inner"},[_vm._t("caption",null,{item:item,index:index})],2)]):_vm._e()}))],1)]):_vm._e()],1),_vm._v(" "),(_vm.config.controls.cursor && !_vm.cursorProps.touch.active)?_c('div',{staticClass:"sky-swiper-cursor-area",style:(_vm.cursorAreaStylePadded),on:{"mouseenter":_vm.onCursorEnter,"mouseleave":_vm.onCursorLeave,"mousemove":_vm.onCursorMove,"mousedown":_vm.onCursorDown,"mouseup":_vm.onCursorUp}},[_c('div',{staticClass:"cursor-area-content",style:(_vm.cursorAreaStyle),on:{"click":_vm.onCursorClick}},[_c('div',{staticClass:"sky-swiper-cursor-container",style:(_vm.cursorStyle)},[_c('div',{ref:"cursor",class:['sky-swiper-cursor', _vm.cursorDirection, {
-						pressed: _vm.cursorProps.pressed
-					}]},[_vm._t("cursor",null,{direction:_vm.cursorDirection,active:_vm.cursorProps.active,pressed:_vm.cursorProps.pressed})],2)])])]):_vm._e(),_vm._v(" "),(_vm.config.navigation.location === 'after-caption')?_c('SkySwiperNavigation',[_vm._t("navigation-previous",null,{slot:"previous"}),_vm._v(" "),_vm._t("navigation-next",null,{slot:"next"})],2):_vm._e()],1)};
+return _c('div',{},[_vm._t("bullets",null,{active:active,index:index})],2)}}])},[_c('div',{attrs:{"slot":"previous"},slot:"previous"},[_vm._t("navigation-previous")],2),_vm._v(" "),_c('div',{attrs:{"slot":"next"},slot:"next"},[_vm._t("navigation-next")],2)]):_vm._e(),_vm._v(" "),(_vm.$scopedSlots.caption)?_c('figcaption',{ref:"captionWrap",staticClass:"sky-swiper-caption-wrap",style:(_vm.caption.style)},[_c('div',{ref:"caption",staticClass:"sky-swiper-caption"},[_c('transition',{attrs:{"name":_vm.config.animation.caption}},_vm._l((_vm.items),function(item,index){return (index === _vm.api.states.currentIndex)?_c('div',{key:index,staticClass:"sky-swiper-caption-item"},[_c('div',{staticClass:"sky-swiper-caption-item-inner"},[_vm._t("caption",null,{item:item,index:index})],2)]):_vm._e()}))],1)]):_vm._e()],1),_vm._v(" "),(_vm.config.controls.cursor && !_vm.cursorProps.touch.active)?_c('div',{staticClass:"sky-swiper-cursor-area",style:(_vm.cursorAreaStylePadded),on:{"mouseenter":_vm.onCursorEnter,"mouseleave":_vm.onCursorLeave,"mousemove":_vm.onCursorMove,"mousedown":_vm.onCursorDown,"mouseup":_vm.onCursorUp}},[_c('div',{staticClass:"cursor-area-content",style:(_vm.cursorAreaStyle),on:{"click":_vm.onCursorClick}},[_c('div',{staticClass:"sky-swiper-cursor-container",style:(_vm.cursorStyle)},[_c('div',{ref:"cursor",class:['sky-swiper-cursor', _vm.cursorDirection, {
+							pressed: _vm.api.states.cursor.pressed
+						}]},[_vm._t("cursor",null,{direction:_vm.cursorDirection,active:_vm.api.states.cursor.active,pressed:_vm.api.states.cursor.pressed})],2)])])]):_vm._e(),_vm._v(" "),(_vm.config.navigation.location === 'after-caption')?_c('SkySwiperNavigation',[_vm._t("navigation-previous",null,{slot:"previous"}),_vm._v(" "),_vm._t("navigation-next",null,{slot:"next"})],2):_vm._e()],{touch:_vm.api.touch,cursor:_vm.api.cursor,goTo:_vm.api.navigation,states:_vm.api.states})],2)};
 var __vue_staticRenderFns__$1 = [];
 
   /* style */
