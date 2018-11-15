@@ -198,29 +198,35 @@ var script$1 = {
 				x: 0,
 				y: 0,
 			},
-			cursorProps: {
-				pos: {
-					x: 0,
-					y: 0,
-				},
-				// dimensions: {
-				// 	width: 0,
-				// 	height: 0,
+			// cursorProps: {
+			// 	pos: {
+			// 		x: 0,
+			// 		y: 0,
+			// 	},
+			// 	dimensions: {
+			// 		width: 0,
+			// 		height: 0,
+			// 	},
+			// 	area: {
+			// 		top: 0,
+			// 		left: 0,
+			// 		width: 0,
+			// 		height: 0,
+			// 	},
+			// 	pressed: false,
+			// 	active: false,
+				// touch: {
+				// 	startX: 0,
+				// 	dragX: 0,
+				// 	active: false,
+				// 	touching: false,
 				// },
-				area: {
-					top: 0,
-					left: 0,
-				// 	width: 0,
-				// 	height: 0,
-				},
-				pressed: false,
+			// },
+			touch: {
+				startX: 0,
+				dragX: 0,
 				active: false,
-				touch: {
-					startX: 0,
-					dragX: 0,
-					active: false,
-					touching: false,
-				},
+				touching: false,
 			},
 			// caption: {
 			// 	dimensions: null,
@@ -238,14 +244,14 @@ var script$1 = {
 	computed: {
 		api() {
 			return {
-				cursor: {
-					enter: this.onCursorEnter,
-					leave: this.onCursorLeave,
-					move: this.onCursorMove,
-					down: this.onCursorDown,
-					up: this.onCursorUp,
-					click: this.onCursorClick,
-				},
+				// cursor: {
+				// 	enter: this.onCursorEnter,
+				// 	leave: this.onCursorLeave,
+				// 	move: this.onCursorMove,
+				// 	down: this.onCursorDown,
+				// 	up: this.onCursorUp,
+				// 	click: this.onCursorClick,
+				// },
 				touch: {
 					start: this.onTouchstart,
 					move: this.onTouchmove,
@@ -260,11 +266,12 @@ var script$1 = {
 				states: {
 					currentIndex: this.currentIndex,
 					direction: this.direction,
-					cursor: {
-						active: this.cursorProps.active,
-						pressed: this.cursorProps.pressed,
-						direction: this.cursorDirection,
-					}
+					touch: this.touch,
+					// cursor: {
+					// 	active: this.cursorProps.active,
+					// 	pressed: this.cursorProps.pressed,
+					// 	direction: this.cursorDirection,
+					// }
 				},
 			}
 		},
@@ -277,16 +284,16 @@ var script$1 = {
 					: { content: this.animation, caption: this.animation },
 			};
 		},
-		cursorEnabled() {
-			return this.config.controls.cursor;
-		},
-		cursorDirection() {
-			if (this.cursorProps.pos.x < this.cursorProps.area.left + this.cursorProps.area.width * 0.5) {
-				return 'previous';
-			}
+		// cursorEnabled() {
+		// 	return this.config.controls.cursor;
+		// },
+		// cursorDirection() {
+		// 	if (this.cursorProps.pos.x < this.cursorProps.area.left + this.cursorProps.area.width * 0.5) {
+		// 		return 'previous';
+		// 	}
 
-			return 'next';
-		},
+		// 	return 'next';
+		// },
 		// cursorStyle() {
 		// 	if (!this.cursorProps.active) {
 		// 		return {
@@ -352,7 +359,7 @@ var script$1 = {
 			const distanceBackwards = Math.abs(distanceForwards - itemsLength);
 			this.direction = (distanceBackwards < distanceForwards) ? 'backwards' : 'forwards';
 			this.currentIndex = to;
-			this.$nextTick(this.captionChangeSize);
+			// this.$nextTick(this.captionChangeSize);
 			this.$emit('change', index);
 		},
 		goToNext() {
@@ -363,78 +370,79 @@ var script$1 = {
 			this.goTo(this.currentIndex - 1);
 			this.$emit('previous', this.currentIndex - 1);
 		},
-		captionChangeSize() {
-			if (this.$refs.caption) {
-				const bounding = this.$refs.caption.getBoundingClientRect();
-				this.$set(this.caption.style, 'height', `${bounding.height}px`);
-			}
-		},
+		// captionChangeSize() {
+		// 	if (this.$refs.caption) {
+		// 		const bounding = this.$refs.caption.getBoundingClientRect();
+		// 		this.$set(this.caption.style, 'height', `${bounding.height}px`);
+		// 	}
+		// },
 		onResize() {
 			this.onScroll();
-			const elRect = this.$el.getBoundingClientRect();
+			// const elRect = this.$el.getBoundingClientRect();
+			// this.cursorProps.area.top = elRect.top + this.scroll.y;
+			// this.cursorProps.area.left = elRect.left + this.scroll.x;
+
 			// const contentRect = this.$refs.content.getBoundingClientRect();
-			this.cursorProps.area.top = elRect.top + this.scroll.y;
-			this.cursorProps.area.left = elRect.left + this.scroll.x;
 			// this.cursorProps.area.width = contentRect.width;
 			// this.cursorProps.area.height = contentRect.height;
-			// if (this.$refs.cursor && !this.cursorProps.touch.active) {
+			// if (this.$refs.cursor && !this.touch.active) {
 				// const cursorRect = this.$refs.cursor.getBoundingClientRect();
 				// this.cursorProps.dimensions.width = cursorRect.width;
 				// this.cursorProps.dimensions.height = cursorRect.height;
 			// }
-			this.$nextTick(this.captionChangeSize);
+			// this.$nextTick(this.captionChangeSize);
 		},
 		onScroll() {
 			this.scroll.y = window.pageYOffset;
 			this.scroll.x = window.pageXOffset;
 		},
-		onCursorClick() {
-			if (this.cursorDirection === 'previous') {
-				this.goToPrevious();
-			} else {
-				this.goToNext();
-			}
-		},
-		onCursorDown() {
-			this.cursorProps.pressed = true;
-		},
-		onCursorUp() {
-			this.cursorProps.pressed = false;
-		},
-		onCursorEnter(event) {
-			this.onCursorMove(event);
-			this.cursorProps.active = true;
-			this.cursorProps.pressed = false;
-		},
-		onCursorLeave(event) {
-			this.onCursorMove(event);
-			this.cursorProps.active = false;
-			this.cursorProps.pressed = false;
-		},
-		onCursorMove(event) {
-			this.cursorProps.pos.x = event.clientX;
-			this.cursorProps.pos.y = event.clientY;
-		},
+		// onCursorClick() {
+		// 	if (this.cursorDirection === 'previous') {
+		// 		this.goToPrevious();
+		// 	} else {
+		// 		this.goToNext();
+		// 	}
+		// },
+		// onCursorDown() {
+		// 	this.cursorProps.pressed = true;
+		// },
+		// onCursorUp() {
+		// 	this.cursorProps.pressed = false;
+		// },
+		// onCursorEnter(event) {
+		// 	this.onCursorMove(event);
+		// 	this.cursorProps.active = true;
+		// 	this.cursorProps.pressed = false;
+		// },
+		// onCursorLeave(event) {
+		// 	this.onCursorMove(event);
+		// 	this.cursorProps.active = false;
+		// 	this.cursorProps.pressed = false;
+		// },
+		// onCursorMove(event) {
+		// 	this.cursorProps.pos.x = event.clientX;
+		// 	this.cursorProps.pos.y = event.clientY;
+		// },
 		onTouchstart(event) {
-			if (!this.cursorProps.touch.active) {
-				this.cursorProps.touch.active = true;
-				this.cursorProps.dimensions.width = 0;
-				this.cursorProps.dimensions.height = 0;
+			if (!this.touch.active) {
+				this.touch.active = true;
+				// this.cursorProps.dimensions.width = 0;
+				// this.cursorProps.dimensions.height = 0;
 			}
-			this.cursorProps.touch.startX = event.touches[0].clientX;
+			this.touch.startX = event.touches[0].clientX;
 		},
 		onTouchmove(event) {
-			this.cursorProps.touch.dragX = event.touches[0].clientX - this.cursorProps.touch.startX;
+			this.touch.dragX = event.touches[0].clientX - this.touch.startX;
 		},
 		onTouchend() {
-			if (Math.abs(this.cursorProps.touch.dragX) > 30) {
-				if (this.cursorProps.touch.dragX < 0) {
+			if (Math.abs(this.touch.dragX) > 30) {
+				if (this.touch.dragX < 0) {
 					this.goToNext();
 				} else {
 					this.goToPrevious();
 				}
 			}
-			this.cursorProps.touch.dragX = 0;
+			this.touch.dragX = 0;
 		},
 	},
 };
@@ -443,15 +451,19 @@ var script$1 = {
             const __vue_script__$1 = script$1;
             
 /* template */
-var __vue_render__$1 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:['sky-swiper', _vm.direction, ("slide-" + _vm.currentIndex), {
-	'cursor-active': _vm.cursorProps.active
-}]},[_vm._t("default",[_c('figure',{staticClass:"sky-swiper-wrap"},[_c('div',{ref:"content",class:['sky-swiper-content', _vm.direction],on:{"touchstart":_vm.onTouchstart,"touchmove":_vm.onTouchmove,"touchend":_vm.onTouchend,"touchcancel":_vm.onTouchend}},[_c('transition',{attrs:{"name":_vm.config.animation.content}},[_c('div',{key:_vm.currentIndex,staticClass:"sky-swiper-content-item",attrs:{"keep-alive":""}},[_c('div',{staticClass:"sky-swiper-content-item-inner"},[_vm._t("display",null,{item:_vm.items[_vm.currentIndex],goto:_vm.api.goto,states:_vm.api.states})],2)])])],1),_vm._v(" "),_vm._t("withDisplay",[_c('figcaption',{ref:"captionWrap",staticClass:"sky-swiper-caption-wrap",style:(_vm.caption.style)},[_c('div',{ref:"caption",staticClass:"sky-swiper-caption"},[_c('transition',{attrs:{"name":_vm.config.animation.caption}},_vm._l((_vm.items),function(item,index){return (index === _vm.currentIndex)?_c('div',{key:index,staticClass:"sky-swiper-caption-item"},[_c('div',{staticClass:"sky-swiper-caption-item-inner"},[_c('span',{domProps:{"textContent":_vm._s(item.description)}})])]):_vm._e()}))],1)]),_vm._v(" "),(_vm.config.controls.previous)?_c('button',{staticClass:"sky-swiper-control previous",on:{"click":function($event){_vm.goToPrevious();}}},[_c('span',{staticClass:"sky-swiper-control-icon"},[_c('span',{domProps:{"textContent":_vm._s('<')}})])]):_vm._e(),_vm._v(" "),(_vm.config.controls.next)?_c('button',{staticClass:"sky-swiper-control next",on:{"click":function($event){_vm.goToNext();}}},[_c('span',{staticClass:"sky-swiper-control-icon"},[_c('span',{domProps:{"textContent":_vm._s('>')}})])]):_vm._e()],{items:_vm.items,goto:_vm.api.goto,states:_vm.api.states})],2),_vm._v(" "),_vm._t("outsideDisplay",null,{items:_vm.items,goto:_vm.api.goto,states:_vm.api.states})],{items:_vm.items,touch:_vm.api.touch,cursor:_vm.api.cursor,goto:_vm.api.goto,states:_vm.api.states})],2)};
+var __vue_render__$1 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:[
+	'sky-swiper',
+	_vm.direction,
+	("slide-" + _vm.currentIndex)
+]},[_vm._t("default",[_c('figure',{staticClass:"sky-swiper__wrap"},[_c('div',{ref:"content",class:['sky-swiper__content', _vm.direction],on:{"touchstart":_vm.onTouchstart,"touchmove":_vm.onTouchmove,"touchend":_vm.onTouchend,"touchcancel":_vm.onTouchend}},[_c('transition',{attrs:{"name":"sky-swiper__animation"}},[_c('div',{key:_vm.currentIndex,staticClass:"sky-swiper__item",attrs:{"keep-alive":""}},[_c('div',{staticClass:"sky-swiper__item-inner"},[_vm._t("display",null,{item:_vm.items[_vm.currentIndex],goto:_vm.api.goto,states:_vm.api.states})],2)])])],1),_vm._v(" "),_vm._t("withDisplay",[_c('button',{staticClass:"sky-swiper__control sky-swiper__control--previous",on:{"click":function($event){_vm.goToPrevious();}}},[_c('span',{staticClass:"sky-swiper__control-icon"},[_c('span',{domProps:{"textContent":_vm._s('<')}})])]),_vm._v(" "),_c('button',{staticClass:"sky-swiper__control sky-swiper__control--next",on:{"click":function($event){_vm.goToNext();}}},[_c('span',{staticClass:"sky-swiper__control-icon"},[_c('span',{domProps:{"textContent":_vm._s('>')}})])])],{items:_vm.items,states:_vm.api.states,goto:_vm.api.goto})],2),_vm._v(" "),_vm._t("bullets",[_c('ul',{staticClass:"sky-swiper__bullets"},_vm._l((_vm.items),function(item,index){return _c('li',[_c('button',{class:{
+							active: index === _vm.currentIndex,
+						},on:{"click":function($event){_vm.goTo(index);}}})])}))],{item:_vm.items,states:_vm.api.states,goto:_vm.api.goto.index})],{items:_vm.items,touch:_vm.api.touch,goto:_vm.api.goto,states:_vm.api.states})],2)};
 var __vue_staticRenderFns__$1 = [];
 
   /* style */
   const __vue_inject_styles__$1 = function (inject) {
     if (!inject) return
-    inject("data-v-4604ac73_0", { source: "\n.sky-swiper-content{position:relative;overflow:hidden;z-index:1\n}\n.sky-swiper-content-item{position:relative;transition:transform .2s;overflow:hidden;width:100%;height:100%;z-index:3;height:100%;transition:transform .2s\n}\n&.previous{position:absolute;top:0;right:100%;width:100%;height:100%;z-index:2\n}\n&.next{position:absolute;top:0;left:100%;width:100%;height:100%;z-index:2\n}\n&.default-enter-active,&.default-leave-active{transition:transform .5s $SmoothOut\n}\n&.default-enter,.backwards &.default-leave-to{transform:translateX(100%)\n}\n.backwards &.default-enter{transform:translateX(-100%)\n}\n.sky-swiper-caption{position:relative\n}\n.sky-swiper-caption-item{position:relative\n}\n&.default-enter,&.default-leave-to{opacity:0\n}\n&.default-leave-active{position:absolute\n}\n.sky-swiper-cursor-area{position:absolute;z-index:2\n}\n.cursor-area-content{position:relative;overflow:hidden;cursor:none\n}\n.sky-swiper-cursor-container{position:absolute;top:0;left:0\n}", map: undefined, media: undefined });
+    inject("data-v-4604ac73_0", { source: "\n.sky-swiper__content{position:relative;overflow:hidden;z-index:1\n}\n&-enter,.backwards &-leave-to{transform:translateX(100%)\n}\n.backwards &-enter{transform:translateX(-100%)\n}\n&.next{position:absolute;top:0;left:100%;width:100%;height:100%;z-index:2\n}\n.sky-swiper__control{position:absolute;top:0;bottom:0;width:15%;margin:0;padding:0;border:none;z-index:5;background-color:transparent;color:#fff;transform:translateX(0);transition:all .3s\n}\n&--previous{left:0\n}", map: undefined, media: undefined });
 
   };
   /* scoped */

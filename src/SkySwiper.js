@@ -49,29 +49,35 @@ export default {
 				x: 0,
 				y: 0,
 			},
-			cursorProps: {
-				pos: {
-					x: 0,
-					y: 0,
-				},
-				// dimensions: {
-				// 	width: 0,
-				// 	height: 0,
+			// cursorProps: {
+			// 	pos: {
+			// 		x: 0,
+			// 		y: 0,
+			// 	},
+			// 	dimensions: {
+			// 		width: 0,
+			// 		height: 0,
+			// 	},
+			// 	area: {
+			// 		top: 0,
+			// 		left: 0,
+			// 		width: 0,
+			// 		height: 0,
+			// 	},
+			// 	pressed: false,
+			// 	active: false,
+				// touch: {
+				// 	startX: 0,
+				// 	dragX: 0,
+				// 	active: false,
+				// 	touching: false,
 				// },
-				area: {
-					top: 0,
-					left: 0,
-				// 	width: 0,
-				// 	height: 0,
-				},
-				pressed: false,
+			// },
+			touch: {
+				startX: 0,
+				dragX: 0,
 				active: false,
-				touch: {
-					startX: 0,
-					dragX: 0,
-					active: false,
-					touching: false,
-				},
+				touching: false,
 			},
 			// caption: {
 			// 	dimensions: null,
@@ -89,14 +95,14 @@ export default {
 	computed: {
 		api() {
 			return {
-				cursor: {
-					enter: this.onCursorEnter,
-					leave: this.onCursorLeave,
-					move: this.onCursorMove,
-					down: this.onCursorDown,
-					up: this.onCursorUp,
-					click: this.onCursorClick,
-				},
+				// cursor: {
+				// 	enter: this.onCursorEnter,
+				// 	leave: this.onCursorLeave,
+				// 	move: this.onCursorMove,
+				// 	down: this.onCursorDown,
+				// 	up: this.onCursorUp,
+				// 	click: this.onCursorClick,
+				// },
 				touch: {
 					start: this.onTouchstart,
 					move: this.onTouchmove,
@@ -111,11 +117,12 @@ export default {
 				states: {
 					currentIndex: this.currentIndex,
 					direction: this.direction,
-					cursor: {
-						active: this.cursorProps.active,
-						pressed: this.cursorProps.pressed,
-						direction: this.cursorDirection,
-					}
+					touch: this.touch,
+					// cursor: {
+					// 	active: this.cursorProps.active,
+					// 	pressed: this.cursorProps.pressed,
+					// 	direction: this.cursorDirection,
+					// }
 				},
 			}
 		},
@@ -128,16 +135,16 @@ export default {
 					: { content: this.animation, caption: this.animation },
 			};
 		},
-		cursorEnabled() {
-			return this.config.controls.cursor;
-		},
-		cursorDirection() {
-			if (this.cursorProps.pos.x < this.cursorProps.area.left + this.cursorProps.area.width * 0.5) {
-				return 'previous';
-			}
+		// cursorEnabled() {
+		// 	return this.config.controls.cursor;
+		// },
+		// cursorDirection() {
+		// 	if (this.cursorProps.pos.x < this.cursorProps.area.left + this.cursorProps.area.width * 0.5) {
+		// 		return 'previous';
+		// 	}
 
-			return 'next';
-		},
+		// 	return 'next';
+		// },
 		// cursorStyle() {
 		// 	if (!this.cursorProps.active) {
 		// 		return {
@@ -203,7 +210,7 @@ export default {
 			const distanceBackwards = Math.abs(distanceForwards - itemsLength);
 			this.direction = (distanceBackwards < distanceForwards) ? 'backwards' : 'forwards';
 			this.currentIndex = to;
-			this.$nextTick(this.captionChangeSize);
+			// this.$nextTick(this.captionChangeSize);
 			this.$emit('change', index);
 		},
 		goToNext() {
@@ -214,78 +221,79 @@ export default {
 			this.goTo(this.currentIndex - 1);
 			this.$emit('previous', this.currentIndex - 1);
 		},
-		captionChangeSize() {
-			if (this.$refs.caption) {
-				const bounding = this.$refs.caption.getBoundingClientRect();
-				this.$set(this.caption.style, 'height', `${bounding.height}px`);
-			}
-		},
+		// captionChangeSize() {
+		// 	if (this.$refs.caption) {
+		// 		const bounding = this.$refs.caption.getBoundingClientRect();
+		// 		this.$set(this.caption.style, 'height', `${bounding.height}px`);
+		// 	}
+		// },
 		onResize() {
 			this.onScroll();
-			const elRect = this.$el.getBoundingClientRect();
+			// const elRect = this.$el.getBoundingClientRect();
+			// this.cursorProps.area.top = elRect.top + this.scroll.y;
+			// this.cursorProps.area.left = elRect.left + this.scroll.x;
+
 			// const contentRect = this.$refs.content.getBoundingClientRect();
-			this.cursorProps.area.top = elRect.top + this.scroll.y;
-			this.cursorProps.area.left = elRect.left + this.scroll.x;
 			// this.cursorProps.area.width = contentRect.width;
 			// this.cursorProps.area.height = contentRect.height;
-			// if (this.$refs.cursor && !this.cursorProps.touch.active) {
+			// if (this.$refs.cursor && !this.touch.active) {
 				// const cursorRect = this.$refs.cursor.getBoundingClientRect();
 				// this.cursorProps.dimensions.width = cursorRect.width;
 				// this.cursorProps.dimensions.height = cursorRect.height;
 			// }
-			this.$nextTick(this.captionChangeSize);
+			// this.$nextTick(this.captionChangeSize);
 		},
 		onScroll() {
 			this.scroll.y = window.pageYOffset;
 			this.scroll.x = window.pageXOffset;
 		},
-		onCursorClick() {
-			if (this.cursorDirection === 'previous') {
-				this.goToPrevious();
-			} else {
-				this.goToNext();
-			}
-		},
-		onCursorDown() {
-			this.cursorProps.pressed = true;
-		},
-		onCursorUp() {
-			this.cursorProps.pressed = false;
-		},
-		onCursorEnter(event) {
-			this.onCursorMove(event);
-			this.cursorProps.active = true;
-			this.cursorProps.pressed = false;
-		},
-		onCursorLeave(event) {
-			this.onCursorMove(event);
-			this.cursorProps.active = false;
-			this.cursorProps.pressed = false;
-		},
-		onCursorMove(event) {
-			this.cursorProps.pos.x = event.clientX;
-			this.cursorProps.pos.y = event.clientY;
-		},
+		// onCursorClick() {
+		// 	if (this.cursorDirection === 'previous') {
+		// 		this.goToPrevious();
+		// 	} else {
+		// 		this.goToNext();
+		// 	}
+		// },
+		// onCursorDown() {
+		// 	this.cursorProps.pressed = true;
+		// },
+		// onCursorUp() {
+		// 	this.cursorProps.pressed = false;
+		// },
+		// onCursorEnter(event) {
+		// 	this.onCursorMove(event);
+		// 	this.cursorProps.active = true;
+		// 	this.cursorProps.pressed = false;
+		// },
+		// onCursorLeave(event) {
+		// 	this.onCursorMove(event);
+		// 	this.cursorProps.active = false;
+		// 	this.cursorProps.pressed = false;
+		// },
+		// onCursorMove(event) {
+		// 	this.cursorProps.pos.x = event.clientX;
+		// 	this.cursorProps.pos.y = event.clientY;
+		// },
 		onTouchstart(event) {
-			if (!this.cursorProps.touch.active) {
-				this.cursorProps.touch.active = true;
-				this.cursorProps.dimensions.width = 0;
-				this.cursorProps.dimensions.height = 0;
+			if (!this.touch.active) {
+				this.touch.active = true;
+				// this.cursorProps.dimensions.width = 0;
+				// this.cursorProps.dimensions.height = 0;
 			}
-			this.cursorProps.touch.startX = event.touches[0].clientX;
+			this.touch.startX = event.touches[0].clientX;
 		},
 		onTouchmove(event) {
-			this.cursorProps.touch.dragX = event.touches[0].clientX - this.cursorProps.touch.startX;
+			this.touch.dragX = event.touches[0].clientX - this.touch.startX;
 		},
 		onTouchend() {
-			if (Math.abs(this.cursorProps.touch.dragX) > 30) {
-				if (this.cursorProps.touch.dragX < 0) {
+			if (Math.abs(this.touch.dragX) > 30) {
+				if (this.touch.dragX < 0) {
 					this.goToNext();
 				} else {
 					this.goToPrevious();
 				}
 			}
-			this.cursorProps.touch.dragX = 0;
+			this.touch.dragX = 0;
 		},
 	},
 };
