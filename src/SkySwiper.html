@@ -40,22 +40,42 @@
 			</div>
 
 			<slot
-				name="nonDisplay"
+				name="withDisplay"
 				:items="items"
 				:goto="api.goto"
 				:states="api.states"
 			>
+				<figcaption
+					ref="captionWrap"
+					:style="caption.style"
+					class="sky-swiper-caption-wrap"
+				>
+					<div
+						ref="caption"
+						class="sky-swiper-caption"
+					>
+						<transition :name="config.animation.caption">
+							<div
+								v-for="(item, index) in items"
+								v-if="index === currentIndex"
+								:key="index"
+								class="sky-swiper-caption-item"
+							>
+								<div class="sky-swiper-caption-item-inner">
+									<span v-text="item.description" />
+								</div>
+							</div>
+						</transition>
+					</div>
+				</figcaption>
+
 				<button
 					v-if="config.controls.previous"
 					@click="goToPrevious()"
 					class="sky-swiper-control previous"
 				>
 					<span class="sky-swiper-control-icon">
-						<slot
-							name="controls-previous"
-						>
-							<span v-text="'<'" />
-						</slot>
+						<span v-text="'<'" />
 					</span>
 				</button>
 				<button
@@ -64,45 +84,19 @@
 					class="sky-swiper-control next"
 				>
 					<span class="sky-swiper-control-icon">
-						<slot
-							name="controls-next"
-						>
-							<span v-text="'>'" />
-						</slot>
+						<span v-text="'>'" />
 					</span>
 				</button>
 			</slot>
-			<!-- <figcaption
-				v-if="$scopedSlots.caption"
-				ref="captionWrap"
-				:style="caption.style"
-				class="sky-swiper-caption-wrap"
-			>
-				<div
-					ref="caption"
-					class="sky-swiper-caption"
-				>
-					<transition
-						:name="config.animation.caption"
-					>
-						<div
-							v-for="(item, index) in items"
-							v-if="index === currentIndex"
-							:key="index"
-							class="sky-swiper-caption-item"
-						>
-							<div class="sky-swiper-caption-item-inner">
-								<slot
-									name="caption"
-									:item="item"
-									:index="index"
-								/>
-							</div>
-						</div>
-					</transition>
-				</div>
-			</figcaption> -->
 		</figure>
+
+		<slot
+			name="outsideDisplay"
+			:items="items"
+			:goto="api.goto"
+			:states="api.states"
+		/>
+
 		<!-- <div
 			v-if="config.controls.cursor && !cursorProps.touch.active"
 			:style="cursorAreaStylePadded"
