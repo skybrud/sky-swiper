@@ -449,7 +449,7 @@ var script$1 = {
 /* template */
 var __vue_render__$1 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:['sky-swiper', _vm.direction, ("slide-" + _vm.currentIndex), {
 	'cursor-active': _vm.cursorProps.active
-}]},[_vm._t("default",[_c('figure',{staticClass:"sky-swiper-wrap"},[_c('div',{ref:"content",class:['sky-swiper-content', _vm.direction],on:{"touchstart":_vm.onTouchstart,"touchmove":_vm.onTouchmove,"touchend":_vm.onTouchend,"touchcancel":_vm.onTouchend}},[_c('transition',{attrs:{"name":_vm.config.animation.content}},[_c('div',{key:_vm.currentIndex,staticClass:"sky-swiper-content-item",attrs:{"keep-alive":""}},[_c('div',{staticClass:"sky-swiper-content-item-inner"},[_vm._t("content",null,{item:_vm.items[_vm.currentIndex],index:_vm.currentIndex})],2)])])],1)])],{items:_vm.items,touch:_vm.api.touch,cursor:_vm.api.cursor,goto:_vm.api.goto,states:_vm.api.states})],2)};
+}]},[_vm._t("default",[_c('figure',{staticClass:"sky-swiper-wrap"},[_c('div',{ref:"content",class:['sky-swiper-content', _vm.direction],on:{"touchstart":_vm.onTouchstart,"touchmove":_vm.onTouchmove,"touchend":_vm.onTouchend,"touchcancel":_vm.onTouchend}},[_c('transition',{attrs:{"name":_vm.config.animation.content}},[_c('div',{key:_vm.currentIndex,staticClass:"sky-swiper-content-item",attrs:{"keep-alive":""}},[_c('div',{staticClass:"sky-swiper-content-item-inner"},[_vm._t("content",null,{item:_vm.items[_vm.currentIndex],goto:_vm.api.goto,states:_vm.api.states})],2)])])],1)])],{items:_vm.items,touch:_vm.api.touch,cursor:_vm.api.cursor,goto:_vm.api.goto,states:_vm.api.states})],2)};
 var __vue_staticRenderFns__$1 = [];
 
   /* style */
