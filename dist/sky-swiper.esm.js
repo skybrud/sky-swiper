@@ -207,15 +207,15 @@ var script$1 = {
 					x: 0,
 					y: 0,
 				},
-				dimensions: {
-					width: 0,
-					height: 0,
-				},
+				// dimensions: {
+				// 	width: 0,
+				// 	height: 0,
+				// },
 				area: {
 					top: 0,
 					left: 0,
-					width: 0,
-					height: 0,
+				// 	width: 0,
+				// 	height: 0,
 				},
 				pressed: false,
 				active: false,
@@ -226,11 +226,11 @@ var script$1 = {
 					touching: false,
 				},
 			},
-			caption: {
-				dimensions: null,
-				style: {},
-				animation: null,
-			},
+			// caption: {
+			// 	dimensions: null,
+			// 	style: {},
+			// 	animation: null,
+			// },
 		};
 	},
 	mounted() {
@@ -291,53 +291,53 @@ var script$1 = {
 
 			return 'next';
 		},
-		cursorStyle() {
-			if (!this.cursorProps.active) {
-				return {
-					visibility: 'hidden',
-				};
-			}
-			const position = {
-				x: this.cursorProps.pos.x - (this.cursorProps.area.left - this.scroll.x),
-				y: this.cursorProps.pos.y - (this.cursorProps.area.top - this.scroll.y),
-			};
-			return {
-				transform: `translate(${position.x}px, ${position.y}px) translate(-50%, -50%)`,
-			};
-		},
-		cursorAreaStyle() {
-			if (!this.cursorProps.dimensions.width || !this.cursorProps.dimensions.height) {
-				return {
-					top: 0,
-					left: 0,
-					width: '100%',
-					height: '100%',
-				};
-			}
-			return {
-				top: `${this.cursorProps.dimensions.height * 0.5}px`,
-				left: `${this.cursorProps.dimensions.width * 0.5}px`,
-				width: `${this.cursorProps.area.width}px`,
-				height: `${this.cursorProps.area.height}px`,
-			};
-		},
-		cursorAreaStylePadded() {
-			if (!this.cursorProps.dimensions.width || !this.cursorProps.dimensions.height) {
-				return {
-					top: 0,
-					left: 0,
-					width: '100%',
-					height: '100%',
-				};
-			}
+		// cursorStyle() {
+		// 	if (!this.cursorProps.active) {
+		// 		return {
+		// 			visibility: 'hidden',
+		// 		};
+		// 	}
+		// 	const position = {
+		// 		x: this.cursorProps.pos.x - (this.cursorProps.area.left - this.scroll.x),
+		// 		y: this.cursorProps.pos.y - (this.cursorProps.area.top - this.scroll.y),
+		// 	};
+		// 	return {
+		// 		transform: `translate(${position.x}px, ${position.y}px) translate(-50%, -50%)`,
+		// 	};
+		// },
+		// cursorAreaStyle() {
+		// 	if (!this.cursorProps.dimensions.width || !this.cursorProps.dimensions.height) {
+		// 		return {
+		// 			top: 0,
+		// 			left: 0,
+		// 			width: '100%',
+		// 			height: '100%',
+		// 		};
+		// 	}
+		// 	return {
+		// 		top: `${this.cursorProps.dimensions.height * 0.5}px`,
+		// 		left: `${this.cursorProps.dimensions.width * 0.5}px`,
+		// 		width: `${this.cursorProps.area.width}px`,
+		// 		height: `${this.cursorProps.area.height}px`,
+		// 	};
+		// },
+		// cursorAreaStylePadded() {
+		// 	if (!this.cursorProps.dimensions.width || !this.cursorProps.dimensions.height) {
+		// 		return {
+		// 			top: 0,
+		// 			left: 0,
+		// 			width: '100%',
+		// 			height: '100%',
+		// 		};
+		// 	}
 
-			return {
-				top: `${-this.cursorProps.dimensions.height * 0.5}px`,
-				left: `${-this.cursorProps.dimensions.width * 0.5}px`,
-				width: `${this.cursorProps.area.width + this.cursorProps.dimensions.width}px`,
-				height: `${this.cursorProps.area.height + this.cursorProps.dimensions.height}px`,
-			};
-		},
+		// 	return {
+		// 		top: `${-this.cursorProps.dimensions.height * 0.5}px`,
+		// 		left: `${-this.cursorProps.dimensions.width * 0.5}px`,
+		// 		width: `${this.cursorProps.area.width + this.cursorProps.dimensions.width}px`,
+		// 		height: `${this.cursorProps.area.height + this.cursorProps.dimensions.height}px`,
+		// 	};
+		// },
 	},
 	methods: {
 		addListeners() {
@@ -356,7 +356,7 @@ var script$1 = {
 			const distanceBackwards = Math.abs(distanceForwards - itemsLength);
 			this.direction = (distanceBackwards < distanceForwards) ? 'backwards' : 'forwards';
 			this.currentIndex = to;
-			this.$nextTick(this.captionChangeSize);
+			// this.$nextTick(this.captionChangeSize);
 			this.$emit('change', index);
 		},
 		goToNext() {
@@ -367,26 +367,26 @@ var script$1 = {
 			this.goTo(this.currentIndex - 1);
 			this.$emit('previous', this.currentIndex - 1);
 		},
-		captionChangeSize() {
-			if (this.$refs.caption) {
-				const bounding = this.$refs.caption.getBoundingClientRect();
-				this.$set(this.caption.style, 'height', `${bounding.height}px`);
-			}
-		},
+		// captionChangeSize() {
+		// 	if (this.$refs.caption) {
+		// 		const bounding = this.$refs.caption.getBoundingClientRect();
+		// 		this.$set(this.caption.style, 'height', `${bounding.height}px`);
+		// 	}
+		// },
 		onResize() {
 			this.onScroll();
 			const elRect = this.$el.getBoundingClientRect();
-			const contentRect = this.$refs.content.getBoundingClientRect();
+			// const contentRect = this.$refs.content.getBoundingClientRect();
 			this.cursorProps.area.top = elRect.top + this.scroll.y;
 			this.cursorProps.area.left = elRect.left + this.scroll.x;
-			this.cursorProps.area.width = contentRect.width;
-			this.cursorProps.area.height = contentRect.height;
-			if (this.$refs.cursor && !this.cursorProps.touch.active) {
-				const cursorRect = this.$refs.cursor.getBoundingClientRect();
-				this.cursorProps.dimensions.width = cursorRect.width;
-				this.cursorProps.dimensions.height = cursorRect.height;
-			}
-			this.$nextTick(this.captionChangeSize);
+			// this.cursorProps.area.width = contentRect.width;
+			// this.cursorProps.area.height = contentRect.height;
+			// if (this.$refs.cursor && !this.cursorProps.touch.active) {
+				// const cursorRect = this.$refs.cursor.getBoundingClientRect();
+				// this.cursorProps.dimensions.width = cursorRect.width;
+				// this.cursorProps.dimensions.height = cursorRect.height;
+			// }
+			// this.$nextTick(this.captionChangeSize);
 		},
 		onScroll() {
 			this.scroll.y = window.pageYOffset;
@@ -454,7 +454,9 @@ var active = ref.active;
 var index = ref.index;
 return _c('div',{},[_vm._t("bullets",null,{active:active,index:index})],2)}}])},[_c('div',{attrs:{"slot":"previous"},slot:"previous"},[_vm._t("navigation-previous")],2),_vm._v(" "),_c('div',{attrs:{"slot":"next"},slot:"next"},[_vm._t("navigation-next")],2)]):_vm._e(),_vm._v(" "),(_vm.$scopedSlots.caption)?_c('figcaption',{ref:"captionWrap",staticClass:"sky-swiper-caption-wrap",style:(_vm.caption.style)},[_c('div',{ref:"caption",staticClass:"sky-swiper-caption"},[_c('transition',{attrs:{"name":_vm.config.animation.caption}},_vm._l((_vm.items),function(item,index){return (index === _vm.currentIndex)?_c('div',{key:index,staticClass:"sky-swiper-caption-item"},[_c('div',{staticClass:"sky-swiper-caption-item-inner"},[_vm._t("caption",null,{item:item,index:index})],2)]):_vm._e()}))],1)]):_vm._e()],1),_vm._v(" "),(_vm.config.controls.cursor && !_vm.cursorProps.touch.active)?_c('div',{staticClass:"sky-swiper-cursor-area",style:(_vm.cursorAreaStylePadded),on:{"mouseenter":_vm.onCursorEnter,"mouseleave":_vm.onCursorLeave,"mousemove":_vm.onCursorMove,"mousedown":_vm.onCursorDown,"mouseup":_vm.onCursorUp}},[_c('div',{staticClass:"cursor-area-content",style:(_vm.cursorAreaStyle),on:{"click":_vm.onCursorClick}},[_c('div',{staticClass:"sky-swiper-cursor-container",style:(_vm.cursorStyle)},[_c('div',{ref:"cursor",class:['sky-swiper-cursor', _vm.cursorDirection, {
 							pressed: _vm.cursorProps.pressed
-						}]},[_vm._t("cursor",null,{direction:_vm.cursorDirection,active:_vm.cursorProps.active,pressed:_vm.cursorProps.pressed})],2)])])]):_vm._e(),_vm._v(" "),(_vm.config.navigation.location === 'after-caption')?_c('SkySwiperNavigation',[_vm._t("navigation-previous",null,{slot:"previous"}),_vm._v(" "),_vm._t("navigation-next",null,{slot:"next"})],2):_vm._e()],{items:_vm.items,touch:_vm.api.touch,cursor:_vm.api.cursor,goto:_vm.api.goto,states:_vm.api.states})],2)};
+						}]},[_vm._t("cursor",null,{direction:_vm.cursorDirection,active:_vm.cursorProps.active,pressed:_vm.cursorProps.pressed})],2)])])]):_vm._e(),_vm._v(" "),(_vm.config.navigation.location === 'after-caption')?_c('SkySwiperNavigation',[_vm._t("navigation-previous",null,{slot:"previous"}),_vm._v(" "),_vm._t("navigation-next",null,{slot:"next"})],2):_vm._e()],{items:_vm.items,touch:_vm.api.touch,cursor:_vm.api.cursor,goto:_vm.api.goto,gotoNext:_vm.goToNext,test:{
+			next: _vm.goToNext,
+		},states:_vm.api.states})],2)};
 var __vue_staticRenderFns__$1 = [];
 
   /* style */
