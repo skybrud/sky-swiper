@@ -198,41 +198,12 @@ var script$1 = {
 				x: 0,
 				y: 0,
 			},
-			// cursorProps: {
-			// 	pos: {
-			// 		x: 0,
-			// 		y: 0,
-			// 	},
-			// 	dimensions: {
-			// 		width: 0,
-			// 		height: 0,
-			// 	},
-			// 	area: {
-			// 		top: 0,
-			// 		left: 0,
-			// 		width: 0,
-			// 		height: 0,
-			// 	},
-			// 	pressed: false,
-			// 	active: false,
-				// touch: {
-				// 	startX: 0,
-				// 	dragX: 0,
-				// 	active: false,
-				// 	touching: false,
-				// },
-			// },
 			touch: {
 				startX: 0,
 				dragX: 0,
 				active: false,
 				touching: false,
 			},
-			// caption: {
-			// 	dimensions: null,
-			// 	style: {},
-			// 	animation: null,
-			// },
 		};
 	},
 	mounted() {
@@ -244,14 +215,6 @@ var script$1 = {
 	computed: {
 		api() {
 			return {
-				// cursor: {
-				// 	enter: this.onCursorEnter,
-				// 	leave: this.onCursorLeave,
-				// 	move: this.onCursorMove,
-				// 	down: this.onCursorDown,
-				// 	up: this.onCursorUp,
-				// 	click: this.onCursorClick,
-				// },
 				touch: {
 					start: this.onTouchstart,
 					move: this.onTouchmove,
@@ -267,11 +230,6 @@ var script$1 = {
 					currentIndex: this.currentIndex,
 					direction: this.direction,
 					touch: this.touch,
-					// cursor: {
-					// 	active: this.cursorProps.active,
-					// 	pressed: this.cursorProps.pressed,
-					// 	direction: this.cursorDirection,
-					// }
 				},
 			}
 		},
@@ -284,68 +242,12 @@ var script$1 = {
 					: { content: this.animation, caption: this.animation },
 			};
 		},
-		// cursorEnabled() {
-		// 	return this.config.controls.cursor;
-		// },
-		// cursorDirection() {
-		// 	if (this.cursorProps.pos.x < this.cursorProps.area.left + this.cursorProps.area.width * 0.5) {
-		// 		return 'previous';
-		// 	}
-
-		// 	return 'next';
-		// },
-		// cursorStyle() {
-		// 	if (!this.cursorProps.active) {
-		// 		return {
-		// 			visibility: 'hidden',
-		// 		};
-		// 	}
-		// 	const position = {
-		// 		x: this.cursorProps.pos.x - (this.cursorProps.area.left - this.scroll.x),
-		// 		y: this.cursorProps.pos.y - (this.cursorProps.area.top - this.scroll.y),
-		// 	};
-		// 	return {
-		// 		transform: `translate(${position.x}px, ${position.y}px) translate(-50%, -50%)`,
-		// 	};
-		// },
-		// cursorAreaStyle() {
-		// 	if (!this.cursorProps.dimensions.width || !this.cursorProps.dimensions.height) {
-		// 		return {
-		// 			top: 0,
-		// 			left: 0,
-		// 			width: '100%',
-		// 			height: '100%',
-		// 		};
-		// 	}
-		// 	return {
-		// 		top: `${this.cursorProps.dimensions.height * 0.5}px`,
-		// 		left: `${this.cursorProps.dimensions.width * 0.5}px`,
-		// 		width: `${this.cursorProps.area.width}px`,
-		// 		height: `${this.cursorProps.area.height}px`,
-		// 	};
-		// },
-		// cursorAreaStylePadded() {
-		// 	if (!this.cursorProps.dimensions.width || !this.cursorProps.dimensions.height) {
-		// 		return {
-		// 			top: 0,
-		// 			left: 0,
-		// 			width: '100%',
-		// 			height: '100%',
-		// 		};
-		// 	}
-
-		// 	return {
-		// 		top: `${-this.cursorProps.dimensions.height * 0.5}px`,
-		// 		left: `${-this.cursorProps.dimensions.width * 0.5}px`,
-		// 		width: `${this.cursorProps.area.width + this.cursorProps.dimensions.width}px`,
-		// 		height: `${this.cursorProps.area.height + this.cursorProps.dimensions.height}px`,
-		// 	};
-		// },
 	},
 	methods: {
 		addListeners() {
 			window.addEventListener('resize', this.onResize);
 			window.addEventListener('scroll', this.onScroll);
+
 			this.$nextTick(this.onResize);
 		},
 		removeListeners() {
@@ -359,7 +261,7 @@ var script$1 = {
 			const distanceBackwards = Math.abs(distanceForwards - itemsLength);
 			this.direction = (distanceBackwards < distanceForwards) ? 'backwards' : 'forwards';
 			this.currentIndex = to;
-			// this.$nextTick(this.captionChangeSize);
+
 			this.$emit('change', index);
 		},
 		goToNext() {
@@ -370,64 +272,16 @@ var script$1 = {
 			this.goTo(this.currentIndex - 1);
 			this.$emit('previous', this.currentIndex - 1);
 		},
-		// captionChangeSize() {
-		// 	if (this.$refs.caption) {
-		// 		const bounding = this.$refs.caption.getBoundingClientRect();
-		// 		this.$set(this.caption.style, 'height', `${bounding.height}px`);
-		// 	}
-		// },
 		onResize() {
 			this.onScroll();
-			// const elRect = this.$el.getBoundingClientRect();
-			// this.cursorProps.area.top = elRect.top + this.scroll.y;
-			// this.cursorProps.area.left = elRect.left + this.scroll.x;
-
-			// const contentRect = this.$refs.content.getBoundingClientRect();
-			// this.cursorProps.area.width = contentRect.width;
-			// this.cursorProps.area.height = contentRect.height;
-			// if (this.$refs.cursor && !this.touch.active) {
-				// const cursorRect = this.$refs.cursor.getBoundingClientRect();
-				// this.cursorProps.dimensions.width = cursorRect.width;
-				// this.cursorProps.dimensions.height = cursorRect.height;
-			// }
-			// this.$nextTick(this.captionChangeSize);
 		},
 		onScroll() {
 			this.scroll.y = window.pageYOffset;
 			this.scroll.x = window.pageXOffset;
 		},
-		// onCursorClick() {
-		// 	if (this.cursorDirection === 'previous') {
-		// 		this.goToPrevious();
-		// 	} else {
-		// 		this.goToNext();
-		// 	}
-		// },
-		// onCursorDown() {
-		// 	this.cursorProps.pressed = true;
-		// },
-		// onCursorUp() {
-		// 	this.cursorProps.pressed = false;
-		// },
-		// onCursorEnter(event) {
-		// 	this.onCursorMove(event);
-		// 	this.cursorProps.active = true;
-		// 	this.cursorProps.pressed = false;
-		// },
-		// onCursorLeave(event) {
-		// 	this.onCursorMove(event);
-		// 	this.cursorProps.active = false;
-		// 	this.cursorProps.pressed = false;
-		// },
-		// onCursorMove(event) {
-		// 	this.cursorProps.pos.x = event.clientX;
-		// 	this.cursorProps.pos.y = event.clientY;
-		// },
 		onTouchstart(event) {
 			if (!this.touch.active) {
 				this.touch.active = true;
-				// this.cursorProps.dimensions.width = 0;
-				// this.cursorProps.dimensions.height = 0;
 			}
 			this.touch.startX = event.touches[0].clientX;
 		},
@@ -451,14 +305,10 @@ var script$1 = {
             const __vue_script__$1 = script$1;
             
 /* template */
-var __vue_render__$1 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:[
-	'sky-swiper',
-	("sky-swiper--" + _vm.direction),
-	("slide-" + _vm.currentIndex)
-]},[_vm._t("default",[_c('figure',{staticClass:"sky-swiper__wrap"},[_c('div',{ref:"content",class:[
+var __vue_render__$1 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"sky-swiper"},[_vm._t("default",[_c('figure',{staticClass:"sky-swiper__wrap"},[_c('div',{ref:"content",class:[
 					'sky-swiper__content',
 					("sky-swiper__content--" + _vm.direction)
-				],on:{"touchstart":_vm.onTouchstart,"touchmove":_vm.onTouchmove,"touchend":_vm.onTouchend,"touchcancel":_vm.onTouchend}},[_c('transition',{attrs:{"name":"sky-swiper__animation"}},[_c('div',{key:_vm.currentIndex,staticClass:"sky-swiper__item",attrs:{"keep-alive":""}},[_c('div',{staticClass:"sky-swiper__item-inner"},[_vm._t("display",null,{item:_vm.items[_vm.currentIndex],goto:_vm.api.goto,states:_vm.api.states})],2)])])],1),_vm._v(" "),_vm._t("withDisplay",[_c('button',{staticClass:"sky-swiper__control sky-swiper__control--previous",on:{"click":function($event){_vm.goToPrevious();}}},[_c('span',{staticClass:"sky-swiper__control-icon"},[_c('span',{domProps:{"textContent":_vm._s('<')}})])]),_vm._v(" "),_c('button',{staticClass:"sky-swiper__control sky-swiper__control--next",on:{"click":function($event){_vm.goToNext();}}},[_c('span',{staticClass:"sky-swiper__control-icon"},[_c('span',{domProps:{"textContent":_vm._s('>')}})])])],{items:_vm.items,states:_vm.api.states,goto:_vm.api.goto})],2),_vm._v(" "),_vm._t("bullets",[_c('ul',{staticClass:"sky-swiper__bullets"},_vm._l((_vm.items),function(item,index){return _c('li',[_c('button',{class:[
+				],on:{"touchstart":_vm.onTouchstart,"touchmove":_vm.onTouchmove,"touchend":_vm.onTouchend,"touchcancel":_vm.onTouchend}},[_c('transition',{attrs:{"name":"sky-swiper__animation"}},[_c('div',{key:_vm.currentIndex,staticClass:"sky-swiper__item",attrs:{"keep-alive":""}},[_c('div',{staticClass:"sky-swiper__item-inner"},[_vm._t("display",null,{item:_vm.items[_vm.currentIndex],goto:_vm.api.goto,states:_vm.api.states})],2)])])],1),_vm._v(" "),_vm._t("withDisplay",[_c('button',{staticClass:"sky-swiper__control sky-swiper__control--previous",on:{"click":function($event){_vm.goToPrevious();}}},[_c('span',{staticClass:"sky-swiper__control-icon"},[_c('span',{domProps:{"textContent":_vm._s('<')}})])]),_vm._v(" "),_c('button',{staticClass:"sky-swiper__control sky-swiper__control--next",on:{"click":function($event){_vm.goToNext();}}},[_c('span',{staticClass:"sky-swiper__control-icon"},[_c('span',{domProps:{"textContent":_vm._s('>')}})])])],{items:_vm.items,states:_vm.api.states,goto:_vm.api.goto})],2),_vm._v(" "),_vm._t("bullets",[_c('ul',{staticClass:"sky-swiper__bullets"},_vm._l((_vm.items),function(item,index){return _c('li',{key:index},[_c('button',{class:[
 							'sky-swiper__bullet-button',
 							{
 								'sky-swiper__bullet-button--active': index === _vm.currentIndex,
@@ -469,7 +319,7 @@ var __vue_staticRenderFns__$1 = [];
   /* style */
   const __vue_inject_styles__$1 = function (inject) {
     if (!inject) return
-    inject("data-v-4604ac73_0", { source: "\n.sky-swiper__content{position:relative;overflow:hidden;z-index:1\n}\n&-enter,.backwards &-leave-to{transform:translateX(100%)\n}\n.backwards &-enter{transform:translateX(-100%)\n}\n&.next{position:absolute;top:0;left:100%;width:100%;height:100%;z-index:2\n}\n.sky-swiper__control{position:absolute;top:0;bottom:0;width:15%;margin:0;padding:0;border:none;z-index:5;background-color:transparent;color:#fff;transform:translateX(0);transition:all .3s\n}\n&--previous{left:0\n}\n.sky-swiper__bullets{display:flex;margin:0;padding:0;margin:0;list-style:none\n}\n&--active{background-color:#ccc\n}", map: undefined, media: undefined });
+    inject("data-v-4604ac73_0", { source: "\n.sky-swiper__content{position:relative;overflow:hidden;z-index:1\n}\n&-enter,.sky-swiper__content--backwards &-leave-to{transform:translateX(100%)\n}\n.sky-swiper__content--backwards &-enter{transform:translateX(-100%)\n}\n.sky-swiper__item-inner{width:100%;height:100%;transition:transform .2s\n}\n.sky-swiper__control{position:absolute;top:0;bottom:0;width:15%;margin:0;padding:0;border:none;z-index:5;background-color:transparent;color:#fff;transform:translateX(0);transition:all .3s\n}\n&--previous{left:0\n}\n.sky-swiper__bullets{display:flex;margin:0;padding:0;margin:0;list-style:none\n}\n&--active{background-color:#ccc\n}", map: undefined, media: undefined });
 
   };
   /* scoped */
