@@ -17,9 +17,7 @@
 				@touchcancel="onTouchend"
 				:class="['sky-swiper-content', direction]"
 			>
-				<transition
-					:name="config.animation.content"
-				>
+				<transition :name="config.animation.content">
 					<div
 						:key="currentIndex"
 						keep-alive

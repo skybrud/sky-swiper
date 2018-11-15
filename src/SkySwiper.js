@@ -203,7 +203,7 @@ export default {
 			const distanceBackwards = Math.abs(distanceForwards - itemsLength);
 			this.direction = (distanceBackwards < distanceForwards) ? 'backwards' : 'forwards';
 			this.currentIndex = to;
-			// this.$nextTick(this.captionChangeSize);
+			this.$nextTick(this.captionChangeSize);
 			this.$emit('change', index);
 		},
 		goToNext() {
@@ -214,12 +214,12 @@ export default {
 			this.goTo(this.currentIndex - 1);
 			this.$emit('previous', this.currentIndex - 1);
 		},
-		// captionChangeSize() {
-		// 	if (this.$refs.caption) {
-		// 		const bounding = this.$refs.caption.getBoundingClientRect();
-		// 		this.$set(this.caption.style, 'height', `${bounding.height}px`);
-		// 	}
-		// },
+		captionChangeSize() {
+			if (this.$refs.caption) {
+				const bounding = this.$refs.caption.getBoundingClientRect();
+				this.$set(this.caption.style, 'height', `${bounding.height}px`);
+			}
+		},
 		onResize() {
 			this.onScroll();
 			const elRect = this.$el.getBoundingClientRect();
@@ -233,7 +233,7 @@ export default {
 				// this.cursorProps.dimensions.width = cursorRect.width;
 				// this.cursorProps.dimensions.height = cursorRect.height;
 			// }
-			// this.$nextTick(this.captionChangeSize);
+			this.$nextTick(this.captionChangeSize);
 		},
 		onScroll() {
 			this.scroll.y = window.pageYOffset;
