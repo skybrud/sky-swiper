@@ -6,6 +6,10 @@
 		:touch="api.touch"
 		:cursor="api.cursor"
 		:goto="api.goto"
+		:gotoNext="goToNext"
+		:test="{
+			next: goToNext,
+		}"
 		:states="api.states"
 	>
 		<figure
