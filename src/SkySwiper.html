@@ -29,7 +29,7 @@
 							class="sky-swiper-content-item-inner"
 						>
 							<slot
-								name="content"
+								name="display"
 								:item="items[currentIndex]"
 								:goto="api.goto"
 								:states="api.states"
@@ -37,7 +37,15 @@
 						</div>
 					</div>
 				</transition>
-				<!-- <button
+			</div>
+
+			<slot
+				name="nonDisplay"
+				:items="items"
+				:goto="api.goto"
+				:states="api.states"
+			>
+				<button
 					v-if="config.controls.previous"
 					@click="goToPrevious()"
 					class="sky-swiper-control previous"
@@ -62,8 +70,8 @@
 							<span v-text="'>'" />
 						</slot>
 					</span>
-				</button> -->
-			</div>
+				</button>
+			</slot>
 			<!-- <figcaption
 				v-if="$scopedSlots.caption"
 				ref="captionWrap"
