@@ -1,6 +1,6 @@
 <div :class="[
 	'sky-swiper',
-	direction,
+	`sky-swiper--${direction}`,
 	`slide-${currentIndex}`
 ]">
 	<slot
@@ -16,7 +16,10 @@
 				@touchmove="onTouchmove"
 				@touchend="onTouchend"
 				@touchcancel="onTouchend"
-				:class="['sky-swiper__content', direction]"
+				:class="[
+					'sky-swiper__content',
+					`sky-swiper__content--${direction}`
+				]"
 			>
 				<transition name="sky-swiper__animation">
 					<div
@@ -71,9 +74,12 @@
 				<li v-for="(item, index) in items">
 					<button
 						@click="goTo(index)"
-						:class="{
-							active: index === currentIndex,
-						}"
+						:class="[
+							'sky-swiper__bullet-button',
+							{
+								'sky-swiper__bullet-button--active': index === currentIndex,
+							}
+						]"
 					/>
 				</li>
 			</ul>

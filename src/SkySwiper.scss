@@ -111,3 +111,33 @@ $SmoothOut	: cubic-bezier(0.500, 0.035, 0.190, 1.000);
 	color: #fff;
 	font-size: 50px;
 }
+
+.sky-swiper__bullets {
+	display: flex;
+	margin: 0;
+	padding: 0;
+
+	li {
+		padding: 0;
+		margin: 0;
+		list-style: none;
+	}
+}
+
+.sky-swiper__bullet-button {
+	width: 10px;
+	height: 10px;
+	padding: 0;
+	margin: 0;
+	border-radius: 10px;
+	border: 2px solid transparent;
+	background-color: #333;
+
+	& + & {
+		margin-left: 10px;
+	}
+
+	&--active {
+		background-color: #ccc;
+	}
+}
