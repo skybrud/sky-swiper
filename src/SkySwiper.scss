@@ -28,7 +28,7 @@ $SmoothOut	: cubic-bezier(0.500, 0.035, 0.190, 1.000);
 	}
 
 	&-enter,
-	.backwards &-leave-to {
+	.sky-swiper__content--backwards &-leave-to {
 		transform: translateX(100%);
 
 		.sky-swiper__item-inner {
@@ -37,7 +37,7 @@ $SmoothOut	: cubic-bezier(0.500, 0.035, 0.190, 1.000);
 	}
 
 	&-leave-to,
-	.backwards &-enter {
+	.sky-swiper__content--backwards &-enter {
 		transform: translateX(-100%);
 
 		.sky-swiper__item-inner {
@@ -53,24 +53,6 @@ $SmoothOut	: cubic-bezier(0.500, 0.035, 0.190, 1.000);
 	width: 100%;
 	height: 100%;
 	z-index: 3;
-
-	&.previous {
-		position: absolute;
-		top: 0;
-		right: 100%;
-		width: 100%;
-		height: 100%;
-		z-index: 2;
-	}
-
-	&.next {
-		position: absolute;
-		top: 0;
-		left: 100%;
-		width: 100%;
-		height: 100%;
-		z-index: 2;
-	}
 }
 
 .sky-swiper__item-inner {

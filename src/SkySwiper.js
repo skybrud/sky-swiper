@@ -49,41 +49,12 @@ export default {
 				x: 0,
 				y: 0,
 			},
-			// cursorProps: {
-			// 	pos: {
-			// 		x: 0,
-			// 		y: 0,
-			// 	},
-			// 	dimensions: {
-			// 		width: 0,
-			// 		height: 0,
-			// 	},
-			// 	area: {
-			// 		top: 0,
-			// 		left: 0,
-			// 		width: 0,
-			// 		height: 0,
-			// 	},
-			// 	pressed: false,
-			// 	active: false,
-				// touch: {
-				// 	startX: 0,
-				// 	dragX: 0,
-				// 	active: false,
-				// 	touching: false,
-				// },
-			// },
 			touch: {
 				startX: 0,
 				dragX: 0,
 				active: false,
 				touching: false,
 			},
-			// caption: {
-			// 	dimensions: null,
-			// 	style: {},
-			// 	animation: null,
-			// },
 		};
 	},
 	mounted() {
@@ -95,14 +66,6 @@ export default {
 	computed: {
 		api() {
 			return {
-				// cursor: {
-				// 	enter: this.onCursorEnter,
-				// 	leave: this.onCursorLeave,
-				// 	move: this.onCursorMove,
-				// 	down: this.onCursorDown,
-				// 	up: this.onCursorUp,
-				// 	click: this.onCursorClick,
-				// },
 				touch: {
 					start: this.onTouchstart,
 					move: this.onTouchmove,
@@ -118,11 +81,6 @@ export default {
 					currentIndex: this.currentIndex,
 					direction: this.direction,
 					touch: this.touch,
-					// cursor: {
-					// 	active: this.cursorProps.active,
-					// 	pressed: this.cursorProps.pressed,
-					// 	direction: this.cursorDirection,
-					// }
 				},
 			}
 		},
@@ -135,68 +93,12 @@ export default {
 					: { content: this.animation, caption: this.animation },
 			};
 		},
-		// cursorEnabled() {
-		// 	return this.config.controls.cursor;
-		// },
-		// cursorDirection() {
-		// 	if (this.cursorProps.pos.x < this.cursorProps.area.left + this.cursorProps.area.width * 0.5) {
-		// 		return 'previous';
-		// 	}
-
-		// 	return 'next';
-		// },
-		// cursorStyle() {
-		// 	if (!this.cursorProps.active) {
-		// 		return {
-		// 			visibility: 'hidden',
-		// 		};
-		// 	}
-		// 	const position = {
-		// 		x: this.cursorProps.pos.x - (this.cursorProps.area.left - this.scroll.x),
-		// 		y: this.cursorProps.pos.y - (this.cursorProps.area.top - this.scroll.y),
-		// 	};
-		// 	return {
-		// 		transform: `translate(${position.x}px, ${position.y}px) translate(-50%, -50%)`,
-		// 	};
-		// },
-		// cursorAreaStyle() {
-		// 	if (!this.cursorProps.dimensions.width || !this.cursorProps.dimensions.height) {
-		// 		return {
-		// 			top: 0,
-		// 			left: 0,
-		// 			width: '100%',
-		// 			height: '100%',
-		// 		};
-		// 	}
-		// 	return {
-		// 		top: `${this.cursorProps.dimensions.height * 0.5}px`,
-		// 		left: `${this.cursorProps.dimensions.width * 0.5}px`,
-		// 		width: `${this.cursorProps.area.width}px`,
-		// 		height: `${this.cursorProps.area.height}px`,
-		// 	};
-		// },
-		// cursorAreaStylePadded() {
-		// 	if (!this.cursorProps.dimensions.width || !this.cursorProps.dimensions.height) {
-		// 		return {
-		// 			top: 0,
-		// 			left: 0,
-		// 			width: '100%',
-		// 			height: '100%',
-		// 		};
-		// 	}
-
-		// 	return {
-		// 		top: `${-this.cursorProps.dimensions.height * 0.5}px`,
-		// 		left: `${-this.cursorProps.dimensions.width * 0.5}px`,
-		// 		width: `${this.cursorProps.area.width + this.cursorProps.dimensions.width}px`,
-		// 		height: `${this.cursorProps.area.height + this.cursorProps.dimensions.height}px`,
-		// 	};
-		// },
 	},
 	methods: {
 		addListeners() {
 			window.addEventListener('resize', this.onResize);
 			window.addEventListener('scroll', this.onScroll);
+
 			this.$nextTick(this.onResize);
 		},
 		removeListeners() {
@@ -210,7 +112,7 @@ export default {
 			const distanceBackwards = Math.abs(distanceForwards - itemsLength);
 			this.direction = (distanceBackwards < distanceForwards) ? 'backwards' : 'forwards';
 			this.currentIndex = to;
-			// this.$nextTick(this.captionChangeSize);
+
 			this.$emit('change', index);
 		},
 		goToNext() {
@@ -221,64 +123,16 @@ export default {
 			this.goTo(this.currentIndex - 1);
 			this.$emit('previous', this.currentIndex - 1);
 		},
-		// captionChangeSize() {
-		// 	if (this.$refs.caption) {
-		// 		const bounding = this.$refs.caption.getBoundingClientRect();
-		// 		this.$set(this.caption.style, 'height', `${bounding.height}px`);
-		// 	}
-		// },
 		onResize() {
 			this.onScroll();
-			// const elRect = this.$el.getBoundingClientRect();
-			// this.cursorProps.area.top = elRect.top + this.scroll.y;
-			// this.cursorProps.area.left = elRect.left + this.scroll.x;
-
-			// const contentRect = this.$refs.content.getBoundingClientRect();
-			// this.cursorProps.area.width = contentRect.width;
-			// this.cursorProps.area.height = contentRect.height;
-			// if (this.$refs.cursor && !this.touch.active) {
-				// const cursorRect = this.$refs.cursor.getBoundingClientRect();
-				// this.cursorProps.dimensions.width = cursorRect.width;
-				// this.cursorProps.dimensions.height = cursorRect.height;
-			// }
-			// this.$nextTick(this.captionChangeSize);
 		},
 		onScroll() {
 			this.scroll.y = window.pageYOffset;
 			this.scroll.x = window.pageXOffset;
 		},
-		// onCursorClick() {
-		// 	if (this.cursorDirection === 'previous') {
-		// 		this.goToPrevious();
-		// 	} else {
-		// 		this.goToNext();
-		// 	}
-		// },
-		// onCursorDown() {
-		// 	this.cursorProps.pressed = true;
-		// },
-		// onCursorUp() {
-		// 	this.cursorProps.pressed = false;
-		// },
-		// onCursorEnter(event) {
-		// 	this.onCursorMove(event);
-		// 	this.cursorProps.active = true;
-		// 	this.cursorProps.pressed = false;
-		// },
-		// onCursorLeave(event) {
-		// 	this.onCursorMove(event);
-		// 	this.cursorProps.active = false;
-		// 	this.cursorProps.pressed = false;
-		// },
-		// onCursorMove(event) {
-		// 	this.cursorProps.pos.x = event.clientX;
-		// 	this.cursorProps.pos.y = event.clientY;
-		// },
 		onTouchstart(event) {
 			if (!this.touch.active) {
 				this.touch.active = true;
-				// this.cursorProps.dimensions.width = 0;
-				// this.cursorProps.dimensions.height = 0;
 			}
 			this.touch.startX = event.touches[0].clientX;
 		},

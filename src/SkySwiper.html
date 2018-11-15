@@ -1,8 +1,4 @@
-<div :class="[
-	'sky-swiper',
-	`sky-swiper--${direction}`,
-	`slide-${currentIndex}`
-]">
+<div class="sky-swiper">
 	<slot
 		:items="items"
 		:touch="api.touch"
@@ -71,7 +67,10 @@
 			:goto="api.goto.index"
 		>
 			<ul class="sky-swiper__bullets">
-				<li v-for="(item, index) in items">
+				<li
+					v-for="(item, index) in items"
+					:key="index"
+				>
 					<button
 						@click="goTo(index)"
 						:class="[
