@@ -17,7 +17,10 @@
 					`sky-swiper__content--${direction}`
 				]"
 			>
-				<transition name="sky-swiper__animation">
+				<transition
+					mode="in-out"
+					name="sky-swiper__animation"
+				>
 					<div
 						:key="currentIndex"
 						keep-alive
