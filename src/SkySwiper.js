@@ -26,7 +26,7 @@ export default {
 	props: {
 		items: {
 			type: Array,
-			// required: true,
+			required: true,
 		},
 		controls: {
 			type: Object,
@@ -43,38 +43,8 @@ export default {
 	},
 	data() {
 		return {
-			api: {
-				cursor: {
-					enter: this.onCursorEnter,
-					leave: this.onCursorLeave,
-					move: this.onCursorMove,
-					down: this.onCursorDown,
-					up: this.onCursorUp,
-					click: this.onCursorClick,
-				},
-				touch: {
-					start: this.onTouchstart,
-					move: this.onTouchmove,
-					end: this.onTouchend,
-					cancel: this.onTouchend,
-				},
-				navigation: {
-					previous: this.goToPrevious,
-					next: this.goToNext,
-					index: this.goTo,
-				},
-				states: {
-					currentIndex: 0,
-					direction: 'forwards',
-					cursor: {
-						active: false,
-						pressed: false,
-						direction: this.cursorDirection,
-					}
-				},
-			},
-			// direction: 'forwards',
-			// currentIndex: 0,
+			direction: 'forwards',
+			currentIndex: 0,
 			scroll: {
 				x: 0,
 				y: 0,
@@ -94,8 +64,8 @@ export default {
 					width: 0,
 					height: 0,
 				},
-				// pressed: false,
-				// active: false,
+				pressed: false,
+				active: false,
 				touch: {
 					startX: 0,
 					dragX: 0,
@@ -117,6 +87,38 @@ export default {
 		this.removeListeners();
 	},
 	computed: {
+		api() {
+			return {
+				cursor: {
+					enter: this.onCursorEnter,
+					leave: this.onCursorLeave,
+					move: this.onCursorMove,
+					down: this.onCursorDown,
+					up: this.onCursorUp,
+					click: this.onCursorClick,
+				},
+				touch: {
+					start: this.onTouchstart,
+					move: this.onTouchmove,
+					end: this.onTouchend,
+					cancel: this.onTouchend,
+				},
+				goto: {
+					previous: this.goToPrevious,
+					next: this.goToNext,
+					index: this.goTo,
+				},
+				states: {
+					currentIndex: this.currentIndex,
+					direction: this.direction,
+					cursor: {
+						active: this.cursorProps.active,
+						pressed: this.cursorProps.pressed,
+						direction: this.cursorDirection,
+					}
+				},
+			}
+		},
 		config() {
 			return {
 				controls: Object.assign({}, defaults.controls, this.controls),
@@ -130,10 +132,10 @@ export default {
 			return this.config.controls.cursor;
 		},
 		cursorDirection() {
-			if (this.cursorProps.pos.x
-				< this.cursorProps.area.left + this.cursorProps.area.width * 0.5) {
+			if (this.cursorProps.pos.x < this.cursorProps.area.left + this.cursorProps.area.width * 0.5) {
 				return 'previous';
 			}
+
 			return 'next';
 		},
 		cursorStyle() {
@@ -175,6 +177,7 @@ export default {
 					height: '100%',
 				};
 			}
+
 			return {
 				top: `${-this.cursorProps.dimensions.height * 0.5}px`,
 				left: `${-this.cursorProps.dimensions.width * 0.5}px`,
@@ -196,20 +199,20 @@ export default {
 		goTo(index) {
 			const itemsLength = this.items.length;
 			const to = (itemsLength + index) % itemsLength;
-			const distanceForwards = (to - this.api.states.currentIndex + itemsLength) % itemsLength;
+			const distanceForwards = (to - this.currentIndex + itemsLength) % itemsLength;
 			const distanceBackwards = Math.abs(distanceForwards - itemsLength);
-			this.api.states.direction = (distanceBackwards < distanceForwards) ? 'backwards' : 'forwards';
-			this.api.states.currentIndex = to;
+			this.direction = (distanceBackwards < distanceForwards) ? 'backwards' : 'forwards';
+			this.currentIndex = to;
 			this.$nextTick(this.captionChangeSize);
 			this.$emit('change', index);
 		},
 		goToNext() {
-			this.goTo(this.api.states.currentIndex + 1);
-			this.$emit('next', this.api.states.currentIndex + 1);
+			this.goTo(this.currentIndex + 1);
+			this.$emit('next', this.currentIndex + 1);
 		},
 		goToPrevious() {
-			this.goTo(this.api.states.currentIndex - 1);
-			this.$emit('previous', this.api.states.currentIndex - 1);
+			this.goTo(this.currentIndex - 1);
+			this.$emit('previous', this.currentIndex - 1);
 		},
 		captionChangeSize() {
 			if (this.$refs.caption) {
