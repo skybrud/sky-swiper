@@ -1,4 +1,4 @@
-<div class="sky-swiper">
+<div :class="['sky-swiper', `sky-swiper--${direction}`">
 	<slot
 		:items="items"
 		:touch="api.touch"
@@ -17,10 +17,7 @@
 					`sky-swiper__content--${direction}`
 				]"
 			>
-				<transition
-					mode="in-out"
-					name="sky-swiper__animation"
-				>
+				<transition name="sky-swiper__animation">
 					<div
 						:key="currentIndex"
 						keep-alive
