@@ -112,7 +112,7 @@ export default {
 			const distanceBackwards = Math.abs(distanceForwards - itemsLength);
 			this.direction = (distanceBackwards < distanceForwards) ? 'backwards' : 'forwards';
 			this.currentIndex = to;
-			console.log('index', index);
+
 			this.$emit('change', index);
 		},
 		goToNext() {
