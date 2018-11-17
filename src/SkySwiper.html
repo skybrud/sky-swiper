@@ -12,10 +12,7 @@
 				@touchmove="onTouchmove"
 				@touchend="onTouchend"
 				@touchcancel="onTouchend"
-				:class="[
-					'sky-swiper__content',
-					`sky-swiper__content--${direction}`
-				]"
+				class="sky-swiper__content"
 			>
 				<transition name="sky-swiper__animation">
 					<div
