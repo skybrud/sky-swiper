@@ -320,7 +320,7 @@ var __vue_staticRenderFns__$1 = [];
   /* style */
   const __vue_inject_styles__$1 = function (inject) {
     if (!inject) return
-    inject("data-v-4604ac73_0", { source: "\n.sky-swiper__content{position:relative;overflow:hidden;z-index:1\n}\n&-enter,.sky-swiper--backwards &-leave-to{transform:translateX(100%)\n}\n.sky-swiper--backwards &-enter{transform:translateX(-100%)\n}\n.sky-swiper__item-inner{width:100%;height:100%;transition:transform .2s\n}\n.sky-swiper__control{position:absolute;top:0;bottom:0;width:15%;margin:0;padding:0;border:none;z-index:5;background-color:transparent;color:#fff;transform:translateX(0);transition:all .3s\n}\n&--previous{left:0\n}\n.sky-swiper__bullets{display:flex;margin:0;padding:0;margin:0;list-style:none\n}\n&--active{background-color:#ccc\n}", map: undefined, media: undefined });
+    inject("data-v-4604ac73_0", { source: "\n.sky-swiper__wrap{position:relative\n}\n.sky-swiper__content{position:relative;overflow:hidden;z-index:1\n}\n&-enter,.sky-swiper--backwards &-leave-to{transform:translateX(100%)\n}\n.sky-swiper--backwards &-enter{transform:translateX(-100%)\n}\n.sky-swiper__item-inner{width:100%;height:100%;transition:transform .2s\n}\n.sky-swiper__control{position:absolute;top:0;bottom:0;width:15%;margin:0;padding:0;border:none;z-index:5;background-color:transparent;color:#fff;transform:translateX(0);transition:all .3s\n}\n&--previous{left:0\n}\n.sky-swiper__bullets{display:flex;margin:0;padding:0;margin:0;list-style:none\n}\n&--active{background-color:#ccc\n}", map: undefined, media: undefined });
 
   };
   /* scoped */
