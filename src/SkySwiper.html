@@ -32,53 +32,39 @@
 				</transition>
 			</div>
 
-			<slot
-				name="withDisplay"
-				:items="items"
-				:states="api.states"
-				:goto="api.goto"
+			<button
+				@click="goToPrevious()"
+				class="sky-swiper__control sky-swiper__control--previous"
 			>
-				<button
-					@click="goToPrevious()"
-					class="sky-swiper__control sky-swiper__control--previous"
-				>
-					<span class="sky-swiper__control-icon">
-						<span v-text="'<'" />
-					</span>
-				</button>
-				<button
-					@click="goToNext()"
-					class="sky-swiper__control sky-swiper__control--next"
-				>
-					<span class="sky-swiper__control-icon">
-						<span v-text="'>'" />
-					</span>
-				</button>
-			</slot>
+				<span class="sky-swiper__control-icon">
+					<span v-text="'<'" />
+				</span>
+			</button>
+			<button
+				@click="goToNext()"
+				class="sky-swiper__control sky-swiper__control--next"
+			>
+				<span class="sky-swiper__control-icon">
+					<span v-text="'>'" />
+				</span>
+			</button>
 		</figure>
 
-		<slot
-			name="bullets"
-			:item="items"
-			:states="api.states"
-			:goto="api.goto.index"
-		>
-			<ul class="sky-swiper__bullets">
-				<li
-					v-for="(item, index) in items"
-					:key="index"
-				>
-					<button
-						@click="goTo(index)"
-						:class="[
-							'sky-swiper__bullet-button',
-							{
-								'sky-swiper__bullet-button--active': index === currentIndex,
-							}
-						]"
-					/>
-				</li>
-			</ul>
-		</slot>
+		<ul class="sky-swiper__bullets">
+			<li
+				v-for="(item, index) in items"
+				:key="index"
+			>
+				<button
+					@click="goTo(index)"
+					:class="[
+						'sky-swiper__bullet-button',
+						{
+							'sky-swiper__bullet-button--active': index === currentIndex,
+						}
+					]"
+				/>
+			</li>
+		</ul>
 	</slot>
 </div>
