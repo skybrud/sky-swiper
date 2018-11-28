@@ -1,3 +1,3 @@
 <script src="./SkySwiper.js" />
 <template src="./SkySwiper.html" />
-<style src="./SkySwiper.scss" />
+<style lang="scss" src="./SkySwiper.scss" />
