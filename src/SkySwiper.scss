@@ -139,6 +139,15 @@ $SmoothOut	: cubic-bezier(0.500, 0.035, 0.190, 1.000);
 			transform: translateX(-50%);
 		}
 	}
+
+	// &.previous {
+	// 	left: 0;
+
+	// 	.cursor-active & {
+	// 		opacity: 0;
+	// 		transform: translateX(-50%);
+	// 	}
+	// }
 }
 
 .sky-swiper-control-icon {
