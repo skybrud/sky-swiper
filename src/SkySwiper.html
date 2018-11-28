@@ -1,6 +1,6 @@
 <div :class="['sky-swiper', `sky-swiper--${direction}`]">
 	<slot
-		:items="items"
+		:items="api.items"
 		:touch="api.touch"
 		:goto="api.goto"
 		:states="api.states"
@@ -24,8 +24,6 @@
 							<slot
 								name="display"
 								:item="items[currentIndex]"
-								:goto="api.goto"
-								:states="api.states"
 							/>
 						</div>
 					</div>
@@ -33,24 +31,39 @@
 			</div>
 
 			<button
+				v-if="this.config.prev"
 				@click="goToPrevious()"
 				class="sky-swiper__control sky-swiper__control--previous"
 			>
 				<span class="sky-swiper__control-icon">
-					<span v-text="'<'" />
+					<slot
+						slot="prev"
+						:next="api.goto.previous"
+					>
+						<span v-text="'<'" />
+					</slot>
 				</span>
 			</button>
 			<button
+				v-if="this.config.next"
 				@click="goToNext()"
 				class="sky-swiper__control sky-swiper__control--next"
 			>
 				<span class="sky-swiper__control-icon">
-					<span v-text="'>'" />
+					<slot
+						slot="next"
+						:next="api.goto.next"
+					>
+						<span v-text="'>'" />
+					</slot>
 				</span>
 			</button>
 		</figure>
 
-		<ul class="sky-swiper__bullets">
+		<ul
+			v-if="this.config.bullets"
+			class="sky-swiper__bullets"
+		>
 			<li
 				v-for="(item, index) in items"
 				:key="index"

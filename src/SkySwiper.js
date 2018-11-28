@@ -1,48 +1,24 @@
-import SkySwiperNavigation from './SkySwiperNavigation.vue';
-
-const defaults = {
-	controls: {
-		next: true,
-		previous: true,
-		cursor: false,
-	},
-	navigation: {
-		location: 'before-caption', // can be either 'before-caption' or 'after-caption'
-		indicator: 'none', // can be either 'none', 'pagination' or 'bullets'
-		next: false,
-		previous: false,
-	},
-	animation: {
-		content: 'default',
-		caption: 'default',
-	},
+const defaultOptions = {
+	next: true,
+	previous: true,
+	bullets: false,
 };
 
 export default {
 	name: 'SkySwiper',
-	components: {
-		SkySwiperNavigation,
-	},
 	props: {
 		items: {
 			type: Array,
 			required: true,
 		},
-		controls: {
+		options: {
 			type: Object,
-			default: () => defaults.controls,
-		},
-		navigation: {
-			type: Object,
-			default: () => defaults.navigation,
-		},
-		animation: {
-			type: [String, Object],
-			default: () => defaults.animation,
+			default: () => ({}),
 		},
 	},
 	data() {
 		return {
+			config: Object.assign(defaultOptions, this.options),
 			direction: 'forwards',
 			currentIndex: 0,
 			scroll: {
@@ -66,6 +42,7 @@ export default {
 	computed: {
 		api() {
 			return {
+				items: this.items,
 				touch: {
 					start: this.onTouchstart,
 					move: this.onTouchmove,
