@@ -65,15 +65,6 @@ var script = {
 				},
 			}
 		},
-		config: function config() {
-			return {
-				controls: Object.assign({}, defaults.controls, this.controls),
-				navigation: Object.assign({}, defaults.navigation, this.navigation),
-				animation: (typeof this.animation === 'object')
-					? Object.assign({}, defaults.animation, this.animation)
-					: { content: this.animation, caption: this.animation },
-			};
-		},
 	},
 	methods: {
 		addListeners: function addListeners() {
@@ -192,7 +183,7 @@ var __vue_staticRenderFns__ = [];
     undefined
   );
 
-var defaults$1 = {
+var defaults = {
 	registerComponents: true,
 };
 
@@ -201,7 +192,7 @@ function install(Vue, options) {
 		return;
 	}
 
-	var ref = Object.assign({}, defaults$1, options);
+	var ref = Object.assign({}, defaults, options);
 	var registerComponents = ref.registerComponents;
 
 	if (registerComponents) {

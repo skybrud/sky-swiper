@@ -61,15 +61,6 @@ export default {
 				},
 			}
 		},
-		config() {
-			return {
-				controls: Object.assign({}, defaults.controls, this.controls),
-				navigation: Object.assign({}, defaults.navigation, this.navigation),
-				animation: (typeof this.animation === 'object')
-					? Object.assign({}, defaults.animation, this.animation)
-					: { content: this.animation, caption: this.animation },
-			};
-		},
 	},
 	methods: {
 		addListeners() {
