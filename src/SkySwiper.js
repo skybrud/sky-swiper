@@ -39,29 +39,6 @@ export default {
 	beforeDestroy() {
 		this.removeListeners();
 	},
-	computed: {
-		api() {
-			return {
-				items: this.items,
-				touch: {
-					start: this.onTouchstart,
-					move: this.onTouchmove,
-					end: this.onTouchend,
-					cancel: this.onTouchend,
-				},
-				goto: {
-					previous: this.goToPrevious,
-					next: this.goToNext,
-					index: this.goTo,
-				},
-				states: {
-					currentIndex: this.currentIndex,
-					direction: this.direction,
-					touch: this.touch,
-				},
-			}
-		},
-	},
 	methods: {
 		addListeners() {
 			window.addEventListener('resize', this.onResize);

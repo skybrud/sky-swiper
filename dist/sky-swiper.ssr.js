@@ -43,29 +43,6 @@ var script = {
 	beforeDestroy: function beforeDestroy() {
 		this.removeListeners();
 	},
-	computed: {
-		api: function api() {
-			return {
-				items: this.items,
-				touch: {
-					start: this.onTouchstart,
-					move: this.onTouchmove,
-					end: this.onTouchend,
-					cancel: this.onTouchend,
-				},
-				goto: {
-					previous: this.goToPrevious,
-					next: this.goToNext,
-					index: this.goTo,
-				},
-				states: {
-					currentIndex: this.currentIndex,
-					direction: this.direction,
-					touch: this.touch,
-				},
-			}
-		},
-	},
 	methods: {
 		addListeners: function addListeners() {
 			window.addEventListener('resize', this.onResize);
@@ -127,12 +104,25 @@ var script = {
 /* script */
             var __vue_script__ = script;
 /* template */
-var __vue_render__ = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:['sky-swiper', ("sky-swiper--" + _vm.direction)]},[_vm._t("default",[_c('figure',{staticClass:"sky-swiper__wrap"},[_c('div',{ref:"content",staticClass:"sky-swiper__content",on:{"touchstart":_vm.onTouchstart,"touchmove":_vm.onTouchmove,"touchend":_vm.onTouchend,"touchcancel":_vm.onTouchend}},[_c('transition',{attrs:{"name":"sky-swiper__animation"}},[_c('div',{key:_vm.currentIndex,staticClass:"sky-swiper__item",attrs:{"keep-alive":""}},[_c('div',{staticClass:"sky-swiper__item-inner"},[_vm._t("display",null,{item:_vm.items[_vm.currentIndex]})],2)])])],1),_vm._v(" "),(this.config.prev)?_c('button',{staticClass:"sky-swiper__control sky-swiper__control--previous",on:{"click":function($event){_vm.goToPrevious();}}},[_c('span',{staticClass:"sky-swiper__control-icon"},[_vm._t("default",[_c('span',{domProps:{"textContent":_vm._s('<')}})],{slot:"prev",next:_vm.api.goto.previous})],2)]):_vm._e(),_vm._v(" "),(this.config.next)?_c('button',{staticClass:"sky-swiper__control sky-swiper__control--next",on:{"click":function($event){_vm.goToNext();}}},[_c('span',{staticClass:"sky-swiper__control-icon"},[_vm._t("default",[_c('span',{domProps:{"textContent":_vm._s('>')}})],{slot:"next",next:_vm.api.goto.next})],2)]):_vm._e()]),_vm._v(" "),(this.config.bullets)?_c('ul',{staticClass:"sky-swiper__bullets"},_vm._l((_vm.items),function(item,index){return _c('li',{key:index},[_c('button',{class:[
+var __vue_render__ = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:['sky-swiper', ("sky-swiper--" + _vm.direction)]},[_vm._t("default",[_c('figure',{staticClass:"sky-swiper__wrap"},[_c('div',{ref:"content",staticClass:"sky-swiper__content",on:{"touchstart":_vm.onTouchstart,"touchmove":_vm.onTouchmove,"touchend":_vm.onTouchend,"touchcancel":_vm.onTouchend}},[_c('transition',{attrs:{"name":"sky-swiper__animation"}},[_c('div',{key:_vm.currentIndex,staticClass:"sky-swiper__item",attrs:{"keep-alive":""}},[_c('div',{staticClass:"sky-swiper__item-inner"},[_vm._t("display",null,{item:_vm.items[_vm.currentIndex]})],2)])])],1),_vm._v(" "),(this.config.prev)?_c('button',{staticClass:"sky-swiper__control sky-swiper__control--previous",on:{"click":function($event){_vm.goToPrevious();}}},[_c('span',{staticClass:"sky-swiper__control-icon"},[_vm._t("default",[_c('span',{domProps:{"textContent":_vm._s('<')}})],{slot:"prev",next:_vm.goToPrevious})],2)]):_vm._e(),_vm._v(" "),(this.config.next)?_c('button',{staticClass:"sky-swiper__control sky-swiper__control--next",on:{"click":function($event){_vm.goToNext();}}},[_c('span',{staticClass:"sky-swiper__control-icon"},[_vm._t("default",[_c('span',{domProps:{"textContent":_vm._s('>')}})],{slot:"next",next:_vm.goToNext})],2)]):_vm._e()]),_vm._v(" "),(this.config.bullets)?_c('ul',{staticClass:"sky-swiper__bullets"},_vm._l((_vm.items),function(item,index){return _c('li',{key:index},[_c('button',{class:[
 						'sky-swiper__bullet-button',
 						{
 							'sky-swiper__bullet-button--active': index === _vm.currentIndex,
 						}
-					],on:{"click":function($event){_vm.goTo(index);}}})])})):_vm._e()],{items:_vm.api.items,touch:_vm.api.touch,goto:_vm.api.goto,states:_vm.api.states})],2)};
+					],on:{"click":function($event){_vm.goTo(index);}}})])})):_vm._e()],{items:this.items,touch:{
+			start: this.onTouchstart,
+			move: this.onTouchmove,
+			end: this.onTouchend,
+			cancel: this.onTouchend,
+		},goto:{
+			previous: this.goToPrevious,
+			next: this.goToNext,
+			index: this.goTo,
+		},states:{
+			currentIndex: this.currentIndex,
+			direction: this.direction,
+			touch: this.touch,
+		}})],2)};
 var __vue_staticRenderFns__ = [];
 
   /* style */
@@ -140,7 +130,7 @@ var __vue_staticRenderFns__ = [];
   /* scoped */
   var __vue_scope_id__ = undefined;
   /* module identifier */
-  var __vue_module_identifier__ = "data-v-29cbf491";
+  var __vue_module_identifier__ = "data-v-745b41de";
   /* functional template */
   var __vue_is_functional_template__ = false;
   /* component normalizer */

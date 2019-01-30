@@ -1,10 +1,23 @@
 <template>
 	<div :class="['sky-swiper', `sky-swiper--${direction}`]">
 		<slot
-			:items="api.items"
-			:touch="api.touch"
-			:goto="api.goto"
-			:states="api.states"
+			:items="this.items"
+			:touch="{
+				start: this.onTouchstart,
+				move: this.onTouchmove,
+				end: this.onTouchend,
+				cancel: this.onTouchend,
+			}"
+			:goto="{
+				previous: this.goToPrevious,
+				next: this.goToNext,
+				index: this.goTo,
+			}"
+			:states="{
+				currentIndex: this.currentIndex,
+				direction: this.direction,
+				touch: this.touch,
+			}"
 		>
 			<figure class="sky-swiper__wrap">
 				<div
@@ -39,7 +52,7 @@
 					<span class="sky-swiper__control-icon">
 						<slot
 							slot="prev"
-							:next="api.goto.previous"
+							:next="goToPrevious"
 						>
 							<span v-text="'<'" />
 						</slot>
@@ -53,7 +66,7 @@
 					<span class="sky-swiper__control-icon">
 						<slot
 							slot="next"
-							:next="api.goto.next"
+							:next="goToNext"
 						>
 							<span v-text="'>'" />
 						</slot>
