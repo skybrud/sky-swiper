@@ -2,12 +2,38 @@
   position: relative;
   user-select: none; }
 
-.sky-swiper-content {
+.sky-swiper__wrap {
+  position: relative; }
+
+.sky-swiper__content {
   position: relative;
   overflow: hidden;
   z-index: 1; }
 
-.sky-swiper-content-item {
+.sky-swiper__content .sky-swiper__animation-enter-active, .sky-swiper__content .sky-swiper__animation-leave-active {
+  transition: transform 0.5s cubic-bezier(0.5, 0.035, 0.19, 1); }
+
+.sky-swiper__content .sky-swiper__animation-enter-active .sky-swiper__item-inner, .sky-swiper__content .sky-swiper__animation-leave-active .sky-swiper__item-inner {
+  transition: transform 0.5s cubic-bezier(0.5, 0.035, 0.19, 1); }
+
+.sky-swiper__content .sky-swiper__animation-leave-active {
+  position: absolute;
+  top: 0;
+  left: 0; }
+
+.sky-swiper--backwards .sky-swiper__content .sky-swiper__animation-leave-to, .sky-swiper__content .sky-swiper__animation-enter {
+  transform: translateX(100%); }
+
+.sky-swiper--backwards .sky-swiper__content .sky-swiper__animation-leave-to .sky-swiper__item-inner, .sky-swiper__content .sky-swiper__animation-enter .sky-swiper__item-inner {
+  transform: translateX(-95%); }
+
+.sky-swiper--backwards .sky-swiper__content .sky-swiper__animation-enter, .sky-swiper__content .sky-swiper__animation-leave-to {
+  transform: translateX(-100%); }
+
+.sky-swiper--backwards .sky-swiper__content .sky-swiper__animation-enter .sky-swiper__item-inner, .sky-swiper__content .sky-swiper__animation-leave-to .sky-swiper__item-inner {
+  transform: translateX(95%); }
+
+.sky-swiper__item {
   position: relative;
   transition: transform .2s;
   overflow: hidden;
@@ -15,74 +41,12 @@
   height: 100%;
   z-index: 3; }
 
-.sky-swiper-content-item .sky-swiper-content-item-inner {
+.sky-swiper__item-inner {
   width: 100%;
   height: 100%;
   transition: transform .2s; }
 
-.sky-swiper-content-item.previous {
-  position: absolute;
-  top: 0;
-  right: 100%;
-  width: 100%;
-  height: 100%;
-  z-index: 2; }
-
-.sky-swiper-content-item.next {
-  position: absolute;
-  top: 0;
-  left: 100%;
-  width: 100%;
-  height: 100%;
-  z-index: 2; }
-
-.sky-swiper-content-item.default-enter-active, .sky-swiper-content-item.default-leave-active {
-  transition: transform 0.5s cubic-bezier(0.5, 0.035, 0.19, 1); }
-
-.sky-swiper-content-item.default-enter-active .sky-swiper-content-item-inner, .sky-swiper-content-item.default-leave-active .sky-swiper-content-item-inner {
-  transition: transform 0.5s cubic-bezier(0.5, 0.035, 0.19, 1); }
-
-.sky-swiper-content-item.default-leave-active {
-  position: absolute;
-  top: 0;
-  left: 0; }
-
-.backwards .sky-swiper-content-item.default-leave-to, .sky-swiper-content-item.default-enter {
-  transform: translateX(100%); }
-
-.backwards .sky-swiper-content-item.default-leave-to .sky-swiper-content-item-inner, .sky-swiper-content-item.default-enter .sky-swiper-content-item-inner {
-  transform: translateX(-95%); }
-
-.backwards .sky-swiper-content-item.default-enter, .sky-swiper-content-item.default-leave-to {
-  transform: translateX(-100%); }
-
-.backwards .sky-swiper-content-item.default-enter .sky-swiper-content-item-inner, .sky-swiper-content-item.default-leave-to .sky-swiper-content-item-inner {
-  transform: translateX(95%); }
-
-.sky-swiper-caption-wrap {
-  position: relative;
-  width: 100%;
-  height: auto;
-  overflow: hidden;
-  z-index: 2;
-  transition: height .5s; }
-
-.sky-swiper-caption {
-  position: relative; }
-
-.sky-swiper-caption-item {
-  position: relative; }
-
-.sky-swiper-caption-item.default-enter-active, .sky-swiper-caption-item.default-leave-active {
-  transition: opacity .5s; }
-
-.sky-swiper-caption-item.default-enter, .sky-swiper-caption-item.default-leave-to {
-  opacity: 0; }
-
-.sky-swiper-caption-item.default-leave-active {
-  position: absolute; }
-
-.sky-swiper-control {
+.sky-swiper__control {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -96,21 +60,13 @@
   transform: translateX(0);
   transition: all .3s; }
 
-.sky-swiper-control.next {
+.sky-swiper__control--next {
   right: 0; }
 
-.cursor-active .sky-swiper-control.next {
-  opacity: 0;
-  transform: translateX(50%); }
-
-.sky-swiper-control.previous {
+.sky-swiper__control--previous {
   left: 0; }
 
-.cursor-active .sky-swiper-control.previous {
-  opacity: 0;
-  transform: translateX(-50%); }
-
-.sky-swiper-control-icon {
+.sky-swiper__control-icon {
   display: block;
   position: absolute;
   top: 50%;
@@ -119,33 +75,27 @@
   color: #fff;
   font-size: 50px; }
 
-.sky-swiper-cursor-area {
-  position: absolute;
-  z-index: 2; }
-
-.cursor-area-content {
-  position: relative;
-  overflow: hidden;
-  cursor: none; }
-
-.sky-swiper-cursor-container {
-  position: absolute;
-  top: 0;
-  left: 0; }
-
-.sky-swiper-navigation {
-  position: relative;
-  z-index: 10;
+.sky-swiper__bullets {
   display: flex;
-  align-items: center; }
-
-.sky-swiper-navigation-btn {
-  border: none;
-  background-color: transparent; }
-
-.sky-swiper-bullets {
-  list-style: none;
   margin: 0;
+  padding: 0; }
+
+.sky-swiper__bullets li {
   padding: 0;
-  display: flex;
-  margin: 0; }
+  margin: 0;
+  list-style: none; }
+
+.sky-swiper__bullet-button {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  margin: 0;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-color: #333; }
+
+.sky-swiper__bullet-button + .sky-swiper__bullet-button {
+  margin-left: 10px; }
+
+.sky-swiper__bullet-button--active {
+  background-color: #ccc; }
