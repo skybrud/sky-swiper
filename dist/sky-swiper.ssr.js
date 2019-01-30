@@ -109,11 +109,7 @@ var __vue_render__ = function () {var _vm=this;var _h=_vm.$createElement;var _c=
 						{
 							'sky-swiper__bullet-button--active': index === _vm.currentIndex,
 						}
-					],on:{"click":function($event){_vm.goTo(index);}}})])})):_vm._e()],{items:_vm.items,touchStart:_vm.onTouchstart,touchMove:_vm.onTouchmove,touchEnd:_vm.onTouchend,touchCancel:_vm.onTouchend,gotoNext:_vm.goToNext,gotoPrevious:_vm.goToPrevious,gotoIndex:_vm.goTo,states:{
-			currentIndex: _vm.currentIndex,
-			direction: _vm.direction,
-			touch: _vm.touch,
-		}})],2)};
+					],on:{"click":function($event){_vm.goTo(index);}}})])})):_vm._e()],{items:_vm.items,touchStart:_vm.onTouchstart,touchMove:_vm.onTouchmove,touchEnd:_vm.onTouchend,touchCancel:_vm.onTouchend,gotoNext:_vm.goToNext,gotoPrevious:_vm.goToPrevious,gotoIndex:_vm.goTo,currentIndex:_vm.currentIndex,direction:_vm.direction,touch:_vm.touch})],2)};
 var __vue_staticRenderFns__ = [];
 
   /* style */
@@ -121,7 +117,7 @@ var __vue_staticRenderFns__ = [];
   /* scoped */
   var __vue_scope_id__ = undefined;
   /* module identifier */
-  var __vue_module_identifier__ = "data-v-4d4147f3";
+  var __vue_module_identifier__ = "data-v-a7d96e7c";
   /* functional template */
   var __vue_is_functional_template__ = false;
   /* component normalizer */

@@ -9,11 +9,9 @@
 			:gotoNext="goToNext"
 			:gotoPrevious="goToPrevious"
 			:gotoIndex="goTo"
-			:states="{
-				currentIndex: currentIndex,
-				direction: direction,
-				touch: touch,
-			}"
+			:currentIndex="currentIndex"
+			:direction="direction"
+			:touch="touch"
 		>
 			<figure class="sky-swiper__wrap">
 				<div
