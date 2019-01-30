@@ -105,16 +105,7 @@ var __vue_render__ = function () {var _vm=this;var _h=_vm.$createElement;var _c=
 						{
 							'sky-swiper__bullet-button--active': index === _vm.currentIndex,
 						}
-					],on:{"click":function($event){_vm.goTo(index);}}})])})):_vm._e()],{items:_vm.items,touch:{
-			start: _vm.onTouchstart,
-			move: _vm.onTouchmove,
-			end: _vm.onTouchend,
-			cancel: _vm.onTouchend,
-		},goto:{
-			previous: _vm.goToPrevious,
-			next: _vm.goToNext,
-			index: _vm.goTo,
-		},states:{
+					],on:{"click":function($event){_vm.goTo(index);}}})])})):_vm._e()],{items:_vm.items,touchStart:_vm.onTouchstart,touchMove:_vm.onTouchmove,touchEnd:_vm.onTouchend,touchCancel:_vm.onTouchend,gotoNext:_vm.goToNext,gotoPrevious:_vm.goToPrevious,gotoIndex:_vm.goToIndex,states:{
 			currentIndex: _vm.currentIndex,
 			direction: _vm.direction,
 			touch: _vm.touch,

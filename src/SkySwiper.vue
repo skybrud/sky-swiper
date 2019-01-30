@@ -2,17 +2,13 @@
 	<div :class="['sky-swiper', `sky-swiper--${direction}`]">
 		<slot
 			:items="items"
-			:touch="{
-				start: onTouchstart,
-				move: onTouchmove,
-				end: onTouchend,
-				cancel: onTouchend,
-			}"
-			:goto="{
-				previous: goToPrevious,
-				next: goToNext,
-				index: goTo,
-			}"
+			:touchStart="onTouchstart"
+			:touchMove="onTouchmove"
+			:touchEnd="onTouchend"
+			:touchCancel="onTouchend"
+			:gotoNext="goToNext"
+			:gotoPrevious="goToPrevious"
+			:gotoIndex="goToIndex"
 			:states="{
 				currentIndex: currentIndex,
 				direction: direction,
