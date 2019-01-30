@@ -1,22 +1,22 @@
 <template>
 	<div :class="['sky-swiper', `sky-swiper--${direction}`]">
 		<slot
-			:items="this.items"
+			:items="items"
 			:touch="{
-				start: this.onTouchstart,
-				move: this.onTouchmove,
-				end: this.onTouchend,
-				cancel: this.onTouchend,
+				start: onTouchstart,
+				move: onTouchmove,
+				end: onTouchend,
+				cancel: onTouchend,
 			}"
 			:goto="{
-				previous: this.goToPrevious,
-				next: this.goToNext,
-				index: this.goTo,
+				previous: goToPrevious,
+				next: goToNext,
+				index: goTo,
 			}"
 			:states="{
-				currentIndex: this.currentIndex,
-				direction: this.direction,
-				touch: this.touch,
+				currentIndex: currentIndex,
+				direction: direction,
+				touch: touch,
 			}"
 		>
 			<figure class="sky-swiper__wrap">
@@ -45,7 +45,7 @@
 				</div>
 
 				<button
-					v-if="this.config.prev"
+					v-if="config.prev"
 					@click="goToPrevious()"
 					class="sky-swiper__control sky-swiper__control--previous"
 				>
@@ -59,7 +59,7 @@
 					</span>
 				</button>
 				<button
-					v-if="this.config.next"
+					v-if="config.next"
 					@click="goToNext()"
 					class="sky-swiper__control sky-swiper__control--next"
 				>
@@ -75,7 +75,7 @@
 			</figure>
 
 			<ul
-				v-if="this.config.bullets"
+				v-if="config.bullets"
 				class="sky-swiper__bullets"
 			>
 				<li
