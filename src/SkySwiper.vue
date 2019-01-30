@@ -8,7 +8,7 @@
 			:touchCancel="onTouchend"
 			:gotoNext="goToNext"
 			:gotoPrevious="goToPrevious"
-			:gotoIndex="goToIndex"
+			:gotoIndex="goto"
 			:states="{
 				currentIndex: currentIndex,
 				direction: direction,

@@ -109,7 +109,7 @@ var __vue_render__ = function () {var _vm=this;var _h=_vm.$createElement;var _c=
 						{
 							'sky-swiper__bullet-button--active': index === _vm.currentIndex,
 						}
-					],on:{"click":function($event){_vm.goTo(index);}}})])})):_vm._e()],{items:_vm.items,touchStart:_vm.onTouchstart,touchMove:_vm.onTouchmove,touchEnd:_vm.onTouchend,touchCancel:_vm.onTouchend,gotoNext:_vm.goToNext,gotoPrevious:_vm.goToPrevious,gotoIndex:_vm.goToIndex,states:{
+					],on:{"click":function($event){_vm.goTo(index);}}})])})):_vm._e()],{items:_vm.items,touchStart:_vm.onTouchstart,touchMove:_vm.onTouchmove,touchEnd:_vm.onTouchend,touchCancel:_vm.onTouchend,gotoNext:_vm.goToNext,gotoPrevious:_vm.goToPrevious,gotoIndex:_vm.goto,states:{
 			currentIndex: _vm.currentIndex,
 			direction: _vm.direction,
 			touch: _vm.touch,
@@ -121,7 +121,7 @@ var __vue_staticRenderFns__ = [];
   /* scoped */
   var __vue_scope_id__ = undefined;
   /* module identifier */
-  var __vue_module_identifier__ = "data-v-241af121";
+  var __vue_module_identifier__ = "data-v-1fd6abd3";
   /* functional template */
   var __vue_is_functional_template__ = false;
   /* component normalizer */
