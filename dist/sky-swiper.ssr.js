@@ -190,4 +190,5 @@ function install(Vue, options) {
 	}
 }
 
+exports.SkySwiper = SkySwiper;
 exports.default = install;

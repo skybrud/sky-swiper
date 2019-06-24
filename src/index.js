@@ -4,6 +4,8 @@ const defaults = {
 	registerComponents: true,
 };
 
+export { SkySwiper };
+
 export default function install(Vue, options) {
 	if (install.installed === true) {
 		return;

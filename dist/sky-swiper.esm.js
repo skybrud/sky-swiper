@@ -187,3 +187,4 @@ function install(Vue, options) {
 }
 
 export default install;
+export { SkySwiper };
